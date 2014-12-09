@@ -93,8 +93,11 @@
                     </div>
                     <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
                     <input type="hidden" name="jamSewa" value="${jamSewa}" />
-                    <input type="hidden" name="studio" value="${studio}" />
                     <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
+                    <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
+                    <input type="hidden" name="studio" value="${studio}" />
+                    <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
+                    <input type="hidden" name="noTelp" value="${noTelp}" />
                     <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
                 </form>
             </div>

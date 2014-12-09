@@ -20,5 +20,7 @@ public interface IMemberDAO<T> {
     public List<T> getDataList();
     public int validateLogin(String pUsername, String pPassword);
     public String getSaldo(String pUsername);
+    public void updateTambahSaldo(String pUsername, int pValue);
+    public void updateKurangSaldo(String pUsername, int pValue);
     
 }

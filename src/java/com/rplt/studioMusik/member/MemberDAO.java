@@ -74,6 +74,16 @@ public class MemberDAO implements IMemberDAO<Member> {
         saldo = jdbcTemplate.queryForObject(sql, new Object[]{pUsername}, String.class);
         return saldo;
     }
+
+    @Override
+    public void updateTambahSaldo(String pUsername, int pValue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateKurangSaldo(String pUsername, int pValue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public static class MemberRowMapper implements RowMapper<Member> {
 

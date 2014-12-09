@@ -123,7 +123,7 @@
 
             $(document).ready(function() {
                 $('#popupClockpicker').clockpicker({autoclose: true});
-                $('#popupDatepicker').datepick({dateFormat: 'dd-m-yyyy'});
+                $('#popupDatepicker').datepick({dateFormat: 'dd-M-yyyy'});
                 $('.ui.dropdown').dropdown();
 
                 $('#cekForm').form({

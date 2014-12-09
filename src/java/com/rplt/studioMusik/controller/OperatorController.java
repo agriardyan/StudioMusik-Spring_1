@@ -107,7 +107,9 @@ public class OperatorController {
         String[] splitTglSewa = tanggalSewa.split("[-]");
         String[] splitJamSewa = jamSewa.split("[:]");
         
-        Calendar calendar = new GregorianCalendar(Integer.parseInt(splitTglSewa[2]), Integer.parseInt(splitTglSewa[1]), Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
+//        Calendar calendar = new GregorianCalendar(Integer.parseInt(splitTglSewa[2]), Integer.parseInt(splitTglSewa[1]), Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
+        
+        Calendar calendar = new GregorianCalendar(2000, 1, Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
                 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         
@@ -134,6 +136,7 @@ public class OperatorController {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
+        String jamSelesai = request.getParameter("jamSelesai");
         String studio = request.getParameter("studio");
         String namaPenyewa = request.getParameter("namaPenyewa").toUpperCase();
         String noTelp = request.getParameter("noTelp");
@@ -141,8 +144,8 @@ public class OperatorController {
         String biayaunfmt = request.getParameter("biayaunfmt");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
-        pw.setmMulaiSewa(tanggalSewa);
-        pw.setmSelesaiSewa(jamSewa);
+        pw.setmMulaiSewa(tanggalSewa+ " " + jamSewa);
+        pw.setmSelesaiSewa(tanggalSewa+ " " + jamSelesai);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);

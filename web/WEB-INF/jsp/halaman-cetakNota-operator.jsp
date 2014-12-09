@@ -56,16 +56,16 @@
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="booking" id="cekForm">
+                <form class="ui fluid form segment" action="halamanutamaoperator" id="cekForm">
                     <div class="fields">
                         <h2><font face="calibri"> Terima kasih </font></h2>
-                        <h4><font face="calibri"> Data berhasil disimpan</font></h4>
+                        <h4><font face="calibri"> Data penyewaan studio musik sudah disimpan</font></h4>
                         <br>
                     </div>    
                     <div class="two fields">
                         <div class="field">
                             <br>
-                            <input class="ui blue submit button" name="commit" value="CETAK NOTA!">
+                            <input class="ui blue submit button" name="commit" value="KEMBALI">
                         </div>
                         <div class="field">
                             

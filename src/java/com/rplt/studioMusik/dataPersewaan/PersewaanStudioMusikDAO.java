@@ -33,8 +33,10 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     public void simpanData(PersewaanStudioMusik pPersewaanStudioMusik) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String kode = getGeneratedKodeSewa();
+        
+        System.out.println("kode : "+kode);
 
-        String sql = "insert into PERSEWAAN_STUDIO_MUSIK values(?, ?, ?, ?, to_date('?', 'dd-MON-yyyy HH24:MI'), to_date('?', 'dd-MON-yyyy HH24:MI'), ?)";
+        String sql = "insert into PERSEWAAN_STUDIO_MUSIK values(?, ?, ?, ?, to_date(?, 'dd-MON-yyyy HH24:MI'), to_date(?, 'dd-MON-yyyy HH24:MI'), ?)";
 
         System.out.println(sql);
 
@@ -115,7 +117,7 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
 
     @Override
     public String getGeneratedKodeSewa() {
-        String sql = "SELECT to_char(max(kode_sewa) + 1, 'FM099999') FROM data_persewaan_studio_musik";
+        String sql = "SELECT to_char(max(kode_sewa) + 1, 'FM099999') FROM persewaan_studio_musik";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String query = jdbcTemplate.queryForObject(sql, String.class);
