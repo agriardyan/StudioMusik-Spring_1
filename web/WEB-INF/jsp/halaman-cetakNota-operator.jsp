@@ -65,7 +65,7 @@
                     <div class="two fields">
                         <div class="field">
                             <br>
-                            <input class="ui blue submit button" name="commit" value="KEMBALI">
+                            <input class="ui blue submit button" value="KEMBALI">
                         </div>
                         <div class="field">
                             

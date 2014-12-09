@@ -111,11 +111,9 @@
                                 <th>KODE STUDIO</th>
                                 <th>NAMA PENYEWA</th>
                                 <th>NOMOR TELEPON</th>
-                                <th>TANGGAL SEWA</th>
-                                <th>JAM SEWA</th>
-                                <th>JAM SELESAI</th>
+                                <th>MULAI SEWA</th>
+                                <th>SELESAI SEWA</th>
                                 <th>BIAYA PELUNASAN</th>
-                                <th>STATUS PELUNASAN</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,11 +123,9 @@
                                     <td><c:out value="${dataList.mKodeStudio}" /></td>
                                     <td><c:out value="${dataList.mNamaPenyewa}" /></td>
                                     <td><c:out value="${dataList.mNomorTeleponPenyewa}" /></td>
-                                    <td><c:out value="${dataList.mTanggalSewa}" /></td>
-                                    <td><c:out value="${dataList.mJamSewa}" /></td>
-                                    <td><c:out value="${dataList.mJamSelesai}" /></td>
+                                    <td><c:out value="${dataList.mMulaiSewa}" /></td>
+                                    <td><c:out value="${dataList.mSelesaiSewa}" /></td>
                                     <td><c:out value="${dataList.mBiayaPelunasan}" /></td>
-                                    <td><c:out value="${dataList.mStatusPelunasan}" /></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

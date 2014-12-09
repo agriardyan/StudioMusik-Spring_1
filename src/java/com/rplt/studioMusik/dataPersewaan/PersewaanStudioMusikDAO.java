@@ -57,10 +57,10 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     
     public static void main(String[] args) {
         PersewaanStudioMusik ps = new PersewaanStudioMusik();
-        ps.setmKodeStudio("101");
-        ps.setmMulaiSewa("14-NOV-2014 13:00");
-        ps.setmJamMulaiSewa("13:00");
-        ps.setmDurasi(1);
+        ps.setmKodeStudio("102");
+        ps.setmMulaiSewa("03-DEC-2014");
+        ps.setmJamMulaiSewa("12:00");
+        ps.setmDurasi(3);
         boolean cek = new PersewaanStudioMusikDAO().cekKetersediaanJadwal(ps);
         
         System.out.println(cek);
@@ -77,6 +77,8 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
         String sql = "SELECT to_char((to_date(?, 'HH24:MI') + ? / 24), 'HH24:MI') FROM dual";
 
         String jamSelesai = jdbcTemplate.queryForObject(sql, new Object[]{pPersewaanStudioMusik.getmJamMulaiSewa(), pPersewaanStudioMusik.getmDurasi()}, String.class);
+        
+        System.out.println(jamSelesai);
 
         sql = "select * from PERSEWAAN_STUDIO_MUSIK where KODE_STUDIO = ? "
                 + "and to_char(MULAI_SEWA, 'dd-MON-yyyy') = ? "
@@ -85,18 +87,19 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
                 + "and to_char(SELESAI_SEWA, 'hh24:mi') > ? "
                 + "and to_char(MULAI_SEWA, 'hh24:mi') < ? )";
 
-        System.out.println(sql);
 
         pegawaiList = jdbcTemplate.query(sql,
                 new Object[]{
                     pPersewaanStudioMusik.getmKodeStudio(),
-                    pPersewaanStudioMusik.getmMulaiSewa(),
+                    pPersewaanStudioMusik.getmMulaiSewa().toUpperCase(),
                     pPersewaanStudioMusik.getmJamMulaiSewa(),
                     jamSelesai,
                     pPersewaanStudioMusik.getmJamMulaiSewa(),
                     jamSelesai
                 },
                 new PersewaanStudioMusikRowMapper());
+        
+        System.out.println("list size : "+pegawaiList.size());
 
         if (pegawaiList.isEmpty()) {
             return true;
@@ -107,12 +110,12 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     }
 
     @Override
-    public String hitungBiayaSewa(int pDurasi, String pKodeStudio) {
-        String sql = "SELECT to_char((? * tarif_per_jam), 'FM9,999,999.00') FROM studio_musik WHERE kode_studio = ?";
+    public int hitungBiayaSewa(int pDurasi, String pKodeStudio) {
+        String sql = "SELECT (? * tarif_per_jam) FROM studio_musik WHERE kode_studio = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String query = jdbcTemplate.queryForObject(sql, new Object[]{pDurasi, pKodeStudio}, String.class);
-        return query;
+        return Integer.parseInt(query);
     }
 
     @Override
@@ -132,7 +135,8 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     public List<PersewaanStudioMusik> getDataListByMonth(String pBulan, String pTahun) {
         List<PersewaanStudioMusik> pegawaiList = new ArrayList<PersewaanStudioMusik>();
 
-        String sql = "select KODE_SEWA, KODE_STUDIO, NAMA_PENYEWA, to_char(MULAI_SEWA, 'dd-MON-yyyy HH24:MI'), to_char(SELESAI_SEWA, 'dd-MON-yyyy HH24:MI') from PERSEWAAN_STUDIO_MUSIK "
+        String sql = "select KODE_SEWA, KODE_STUDIO, NAMA_PENYEWA, NOMOR_TELEPON, to_char(MULAI_SEWA, 'dd-MON-yyyy HH24:MI'), to_char(SELESAI_SEWA, 'dd-MON-yyyy HH24:MI'), BIAYA_PELUNASAN "
+                + "from PERSEWAAN_STUDIO_MUSIK "
                 + "WHERE to_char(mulai_sewa, 'mm-yyyy') = '" + pBulan + "-" + pTahun + "' ORDER BY mulai_sewa ASC";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);

@@ -23,7 +23,6 @@
 
         <div class="ui one column page grid" id="formCek">
             <div class="column">
-                <h4 class="ui top center aligned attached inverted blue block header">CEK JADWAL</h4>
                 <!--Search box-->
                 <!--End of Search box-->
                 <form class="ui fluid form segment" action="cekJadwal" method="GET" id="cekForm">

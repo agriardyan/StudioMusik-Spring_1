@@ -9,6 +9,7 @@ import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -69,10 +70,9 @@ public class OperatorController {
 
         boolean cek = persewaanStudioMusik.cekKetersediaanJadwal(pw);
         if (cek) {
-            String biaya = persewaanStudioMusik.hitungBiayaSewa(Integer.parseInt(durasiSewa), studio);
-            String biayaUnformatted = biaya;
-            biayaUnformatted = biayaUnformatted.replace(".", "");
-            biayaUnformatted = biayaUnformatted.replace(",", "");
+            int biayaUnfmt = persewaanStudioMusik.hitungBiayaSewa(Integer.parseInt(durasiSewa), studio);
+            DecimalFormat df = new DecimalFormat("###,###.00");
+            String biaya = df.format(biayaUnfmt);
             biaya = biaya.replace(".", "&");
             biaya = biaya.replace(",", ".");
             biaya = biaya.replace("&", ",");
@@ -83,7 +83,7 @@ public class OperatorController {
             model.addAttribute("studio", studio);
             model.addAttribute("biaya", "Biaya sewa sebesar : Rp " + biaya);
             model.addAttribute("ketersediaan", "Studio Tersedia!");
-            model.addAttribute("biayaunfmt", biayaUnformatted);
+            model.addAttribute("biayaunfmt", biayaUnfmt);
             model.addAttribute("disable", "");
         } else {
             model.addAttribute("ketersediaan", "Studio tidak tersedia pada waktu tersebut!");

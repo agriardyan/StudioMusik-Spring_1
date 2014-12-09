@@ -19,7 +19,7 @@ public interface IPersewaanStudioMusikDAO<T> {
     
     public void simpanData(T pPersewaanStudioMusik);
     public boolean cekKetersediaanJadwal(T pPersewaanStudioMusik);
-    public String hitungBiayaSewa(int pDurasi, String pKodeStudio);
+    public int hitungBiayaSewa(int pDurasi, String pKodeStudio);
     public String getGeneratedKodeSewa();
     public List<T> getDataListByMonth(String pBulan, String pTahun);
     
