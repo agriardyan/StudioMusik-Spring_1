@@ -8,8 +8,6 @@ package com.rplt.studioMusik.controller;
 
 import com.rplt.studioMusik.member.IMemberDAO;
 import com.rplt.studioMusik.member.Member;
-import com.rplt.studioMusik.pegawai.IPegawaiDAO;
-import com.rplt.studioMusik.pegawai.Pegawai;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,11 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author root
  */
 @Controller
-@RequestMapping("/login")
-public class LoginController {
-    
-    @Autowired
-    private IPegawaiDAO<Pegawai> pegawai;
+@RequestMapping("/loginmember")
+public class LoginMemberController {
     
     @Autowired
     private IMemberDAO<Member> member;
@@ -36,33 +31,28 @@ public class LoginController {
     private HttpSession session;
     
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String validateLoginPegawai(@RequestParam("username") String username, @RequestParam("password") String password, ModelMap model) {
+    public String validateLoginMember(@RequestParam("username") String username, @RequestParam("password") String password, ModelMap model) {
         
-        int validateLogin = pegawai.validateLogin(username, password);
+        int validateLogin = member.validateLogin(username, password);
         
         switch (validateLogin) {
                     case 0:
                         //unregistered
                         model.addAttribute("message", "Unregistered username!");
-                        return "index";
+                        return "redirect:home/member";
                     case 1:
                         //wrong password
                         model.addAttribute("message", "Wrong password!");
-                        return "index";
+                        return "redirect:home/member";
                     case 2:
-                        session.setAttribute("role", "Operator");
                         session.setAttribute("name", username);
                         session.setAttribute("username", username);
-                        return "redirect:/operator/halamanutamaoperator";
-                    case 3:
-                        session.setAttribute("role", "Admin");
-                        session.setAttribute("name", username);
-                        session.setAttribute("username", username);
-                        return "redirect:/owner/halamanutamaowner";
+                        return "redirect:/member/halamanutamamember";
                     default:
                         break;
                 }
         
         return null;
     }
+    
 }

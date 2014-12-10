@@ -45,7 +45,7 @@ public class OperatorController {
         session.removeAttribute("username");
         session.removeAttribute("password");
         session.invalidate();
-        return "redirect:/index.htm";
+        return "redirect:/home/welcome";
     }
 
     @RequestMapping(value = "/halamanutamaoperator", method = {RequestMethod.GET, RequestMethod.POST})

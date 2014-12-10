@@ -28,7 +28,7 @@ public class LogoutController {
         session.removeAttribute("password");
         
         session.invalidate();
-        return "index";
+        return "redirect:/home/welcome";
     }
     
 }
