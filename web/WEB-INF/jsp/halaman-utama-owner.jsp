@@ -26,7 +26,7 @@
                     <i class="money icon"></i> UBAH HARGA
                 </a-->
                 <div class="right menu">
-                    <form method="POST">
+                    <form action="logout" method="POST">
                         <div class="ui dropdown link item">
                             <i class="user icon"></i> OWNER <i class="dropdown icon"></i>
                             <div class="menu">

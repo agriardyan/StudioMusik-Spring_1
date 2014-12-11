@@ -52,10 +52,10 @@ public class PegawaiDAO implements IPegawaiDAO<Pegawai> {
     public int validateLogin(String pUsername, String pPassword) {
         List<Pegawai> pegawaiList = new ArrayList<Pegawai>();
 
-        String sql = "SELECT * FROM pegawai_studio_musik WHERE username_pegawai = '" + pUsername.toUpperCase() + "'";
+        String sql = "SELECT * FROM pegawai_studio_musik WHERE username_pegawai = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        pegawaiList = jdbcTemplate.query(sql, new PegawaiRowMapper());
+        pegawaiList = jdbcTemplate.query(sql, new Object[]{pUsername.toUpperCase()}, new PegawaiRowMapper());
 
         if (!pegawaiList.isEmpty()) {
             String username = pegawaiList.get(0).getmUsernamePegawai();

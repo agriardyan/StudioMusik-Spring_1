@@ -50,12 +50,12 @@ public class LoginController {
                         model.addAttribute("message", "Wrong password!");
                         return "index";
                     case 2:
-                        session.setAttribute("role", "Operator");
+                        session.setAttribute("role", "OPERATOR");
                         session.setAttribute("name", username);
                         session.setAttribute("username", username);
                         return "redirect:/operator/halamanutamaoperator";
                     case 3:
-                        session.setAttribute("role", "Admin");
+                        session.setAttribute("role", "OWNER");
                         session.setAttribute("name", username);
                         session.setAttribute("username", username);
                         return "redirect:/owner/halamanutamaowner";

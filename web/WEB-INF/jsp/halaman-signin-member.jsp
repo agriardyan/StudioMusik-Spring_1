@@ -15,7 +15,7 @@
     <body>
         <!--Menu bar-->
         <div class="container">
-            <div class="ui red inverted menu">
+            <div class="ui blue inverted menu">
                 <a class="item" href="welcome">
                     <i class="home icon"></i> HOME
                 </a>
@@ -42,7 +42,7 @@
             </div>
             <div class="ui grid">
                 <div class="four wide column">
-                    <h4 class="ui top center aligned attached inverted red block header">
+                    <h4 class="ui top center aligned attached inverted blue block header">
                         SIGN IN
                     </h4>
                     <form class="ui form segment attached" id="mtixSignin" action="loginmember" method="POST">
@@ -62,7 +62,7 @@
                         </div>
                         <div class="field">${message}</div>
                         <div class="field">
-                            <input class="ui tiny red submit button" type="submit" name="commit" value="Sign in">
+                            <input class="ui tiny blue submit button" type="submit" name="commit" value="Sign in">
                         </div>
                     </form>
                 </div>

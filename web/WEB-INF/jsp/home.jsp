@@ -14,7 +14,7 @@
     </head>
     <body>
         <!--Menu bar-->
-        <div class="ui red inverted main menu">
+        <div class="ui blue inverted main menu">
             <div class="container">
                 <a class="active item" href="welcome">
                     <i class="home icon"></i> HOME
@@ -66,7 +66,7 @@
             <div class="ui grid" style="position: absolute;">
                 <div class="row">
                     <div class="three wide column">
-                        <h4 class="ui top attached inverted red block header">
+                        <h4 class="ui top attached inverted blue block header">
                             BENEFIT
                         </h4>
                         <div class="ui segment attached">
@@ -74,8 +74,8 @@
                         </div>
                     </div>
                     <div class="ten wide column">
-                        <h4 class="ui top center aligned attached inverted red block header">
-                            NOW PLAYING
+                        <h4 class="ui top center aligned attached inverted blue block header">
+                            LATEST NEWS
                         </h4>
                         <div class="ui segment attached">
                             <ul id="slider1">
@@ -85,8 +85,8 @@
                                 <li><img src="${pageContext.request.contextPath}/resources/img/Kucing Fotografer.jpg" alt="slide2" title="Kucing Fotografer"></li>
                             </ul>
                         </div>
-                        <h4 class="ui top center aligned attached inverted red block header">
-                            COMING SOON
+                        <h4 class="ui top center aligned attached inverted blue block header">
+                            UPCOMING EVENT
                         </h4>
                         <div class="ui segment attached">
                             <ul id="slider2">

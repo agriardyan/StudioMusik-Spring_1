@@ -50,7 +50,7 @@ public class MemberController {
         session.removeAttribute("username");
         session.removeAttribute("password");
         session.invalidate();
-        return "redirect:/index.htm";
+        return "redirect:/home/welcome";
     }
 
     @RequestMapping(value = "/halamanutamamember", method = {RequestMethod.GET, RequestMethod.POST})
@@ -152,6 +152,7 @@ public class MemberController {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
+        String jamSelesai = request.getParameter("jamSelesai");
         String studio = request.getParameter("studio");
         String namaPenyewa = request.getParameter("namaPenyewa").toUpperCase();
         String noTelp = request.getParameter("noTelp");
@@ -159,8 +160,8 @@ public class MemberController {
         String biayaunfmt = request.getParameter("biayaunfmt");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
-        pw.setmMulaiSewa(tanggalSewa);
-        pw.setmSelesaiSewa(jamSewa);
+        pw.setmMulaiSewa(tanggalSewa+ " " + jamSewa);
+        pw.setmSelesaiSewa(tanggalSewa+ " " + jamSelesai);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);
