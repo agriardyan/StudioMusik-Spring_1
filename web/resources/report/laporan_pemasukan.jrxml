@@ -2,13 +2,13 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="nota_persewaan"
+		 name="laporan_pemasukan"
 		 columnCount="1"
 		 printOrder="Vertical"
-		 orientation="Landscape"
-		 pageWidth="586"
-		 pageHeight="453"
-		 columnWidth="526"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
 		 columnSpacing="0"
 		 leftMargin="30"
 		 rightMargin="30"
@@ -23,10 +23,8 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<parameter name="P_KODESEWA" isForPrompting="true" class="java.lang.String"/>
-	<queryString><![CDATA[SELECT kode_sewa, kode_studio, nama_penyewa, nomor_telepon, to_char(mulai_sewa, 'dd-MON-yyyy hh24:mi') as mulai_sewa, 
-to_char(selesai_sewa, 'dd-MON-yyyy hh24:mi') as selesai_sewa, biaya_pelunasan FROM persewaan_studio_musik 
-WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
+	<queryString><![CDATA[SELECT kode_sewa, kode_studio, nama_penyewa, nomor_telepon, to_char(mulai_sewa, 'dd-MON-yyyy hh24:mi') AS mulai_sewa, 
+to_char(selesai_sewa, 'dd-MON-yyyy hh24:mi') AS selesai_sewa, biaya_pelunasan FROM persewaan_studio_musik ]]></queryString>
 
 	<field name="KODE_SEWA" class="java.lang.String"/>
 	<field name="KODE_STUDIO" class="java.lang.String"/>
@@ -46,149 +44,149 @@ WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
 					<reportElement
 						x="0"
 						y="0"
-						width="526"
-						height="30"
+						width="535"
+						height="28"
 						key="staticText-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="18" isBold="true"/>
+						<font size="18"/>
 					</textElement>
-				<text><![CDATA[NOTA PERSEWAAN]]></text>
+				<text><![CDATA[LAPORAN PEMASUKAN BULANAN]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
 						x="0"
-						y="30"
-						width="526"
-						height="20"
+						y="28"
+						width="535"
+						height="22"
 						key="staticText-2"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+						<font pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
 					</textElement>
 				<text><![CDATA[STUDIO MUSIK SABHA]]></text>
 				</staticText>
 			</band>
 		</title>
 		<pageHeader>
-			<band height="51"  isSplitAllowed="true" >
+			<band height="50"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="0"
+						x="164"
 						y="0"
-						width="73"
-						height="51"
+						width="48"
+						height="50"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[BULAN :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="313"
+						y="0"
+						width="47"
+						height="50"
 						key="staticText-4"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<text><![CDATA[PENYEWA :]]></text>
-				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="73"
-						y="0"
-						width="135"
-						height="51"
-						key="textField-6"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement verticalAlignment="Middle">
-						<font/>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NAMA_PENYEWA}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement
-						x="339"
-						y="1"
-						width="79"
-						height="50"
-						key="staticText-12"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<text><![CDATA[NO. TELEPON :]]></text>
+				<text><![CDATA[TAHUN :]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="419"
-						y="0"
-						width="107"
-						height="51"
-						key="textField-7"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NOMOR_TELEPON}]]></textFieldExpression>
-				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>
 			<band height="30"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="0"
+						x="1"
 						y="0"
-						width="74"
+						width="52"
 						height="30"
-						key="staticText-3"/>
+						key="staticText-5"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
 				<text><![CDATA[NO. NOTA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="74"
+						x="100"
 						y="0"
-						width="133"
-						height="30"
-						key="staticText-5"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<text><![CDATA[MULAI SEWA]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="207"
-						y="0"
-						width="133"
+						width="82"
 						height="30"
 						key="staticText-6"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
-				<text><![CDATA[SELESAI SEWA]]></text>
+				<text><![CDATA[PENYEWA]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="340"
+						x="53"
 						y="0"
-						width="78"
+						width="47"
 						height="30"
 						key="staticText-7"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
 				<text><![CDATA[STUDIO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="418"
+						x="182"
 						y="0"
-						width="108"
+						width="76"
 						height="30"
 						key="staticText-8"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[NO. TELEPON]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="0"
+						width="105"
+						height="30"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[MULAI SEWA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="363"
+						y="0"
+						width="104"
+						height="30"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[SELESAI SEWA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="467"
+						y="0"
+						width="68"
+						height="30"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
 						<font/>
 					</textElement>
 				<text><![CDATA[BIAYA]]></text>
@@ -196,53 +194,27 @@ WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="47"  isSplitAllowed="true" >
+			<band height="48"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="1"
 						y="0"
-						width="73"
-						height="47"
+						width="52"
+						height="48"
 						key="textField-1"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$F{KODE_SEWA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="74"
+						x="53"
 						y="0"
-						width="133"
-						height="47"
+						width="47"
+						height="48"
 						key="textField-2"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{MULAI_SEWA}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="207"
-						y="0"
-						width="133"
-						height="47"
-						key="textField-3"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SELESAI_SEWA}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="340"
-						y="0"
-						width="78"
-						height="47"
-						key="textField-4"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font/>
@@ -251,11 +223,63 @@ WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="439"
+						x="100"
 						y="0"
-						width="87"
-						height="47"
+						width="82"
+						height="48"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NAMA_PENYEWA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="182"
+						y="0"
+						width="76"
+						height="48"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{NOMOR_TELEPON}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="258"
+						y="0"
+						width="105"
+						height="48"
 						key="textField-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{MULAI_SEWA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="363"
+						y="0"
+						width="104"
+						height="48"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{SELESAI_SEWA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="481"
+						y="0"
+						width="54"
+						height="48"
+						key="textField-7"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font/>
@@ -264,13 +288,13 @@ WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
 				</textField>
 				<staticText>
 					<reportElement
-						x="418"
+						x="467"
 						y="0"
-						width="19"
-						height="47"
-						key="staticText-11"/>
+						width="14"
+						height="48"
+						key="staticText-12"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement verticalAlignment="Middle">
 						<font/>
 					</textElement>
 				<text><![CDATA[Rp]]></text>
@@ -278,44 +302,15 @@ WHERE kode_sewa = $P{P_KODESEWA}]]></queryString>
 			</band>
 		</detail>
 		<columnFooter>
-			<band height="21"  isSplitAllowed="true" >
+			<band height="30"  isSplitAllowed="true" >
 			</band>
 		</columnFooter>
 		<pageFooter>
-			<band height="17"  isSplitAllowed="true" >
+			<band height="50"  isSplitAllowed="true" >
 			</band>
 		</pageFooter>
 		<lastPageFooter>
-			<band height="71"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="0"
-						y="1"
-						width="526"
-						height="15"
-						key="staticText-9"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center">
-						<font/>
-					</textElement>
-				<text><![CDATA[TERIMA KASIH TELAH MENYEWA STUDIO MUSIK KAMI]]></text>
-				</staticText>
-				<staticText>
-					<reportElement
-						x="0"
-						y="16"
-						width="525"
-						height="55"
-						key="staticText-10"/>
-					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font/>
-					</textElement>
-				<text><![CDATA[STUDIO MUSIK SABHA
-MRICAN NO. 20 RT/RW 08/88
-CATURTUNGGAL, DEMANGAN, 
-YOGYAKARTA 55280]]></text>
-				</staticText>
+			<band height="50"  isSplitAllowed="true" >
 			</band>
 		</lastPageFooter>
 		<summary>
