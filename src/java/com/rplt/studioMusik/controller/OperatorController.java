@@ -7,6 +7,8 @@ package com.rplt.studioMusik.controller;
 
 import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
+import com.rplt.studioMusik.member.IMemberDAO;
+import com.rplt.studioMusik.member.Member;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
 import java.text.DecimalFormat;
@@ -39,6 +41,9 @@ public class OperatorController {
     
     @Autowired
     private IStudioMusikDAO<StudioMusik> studioMusik;
+    
+    @Autowired
+    private IMemberDAO<Member> member;
 
     @RequestMapping(method = RequestMethod.POST)
     public String logout() {
@@ -160,6 +165,32 @@ public class OperatorController {
     @RequestMapping(value = "/registrasi", method = RequestMethod.GET)
     public String registrasiMember() {
         return "halaman-registrasiMember-operator";
+    }
+    
+    @RequestMapping(value = "/simpanMember", method = RequestMethod.POST)
+    public String simpanMember() {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String nama = request.getParameter("nama");
+        String alamat = request.getParameter("alamat");
+        String tglLahir = request.getParameter("tanggalLahir");
+        String noTelp = request.getParameter("telepon");
+        String email = request.getParameter("email");
+        int saldo = Integer.parseInt(request.getParameter("saldo"));
+        
+        Member m = new Member();
+        m.setmUsernameMember(username);
+        m.setmPaswordMember(password);
+        m.setmNamaMember(nama);
+        m.setmAlamatMember(alamat);
+        m.setmTempatTanggalLahir(tglLahir);
+        m.setmNomorTelepon(noTelp);
+        m.setmEmailMember(email);
+        m.setmSaldoMember(saldo);
+        
+        member.simpanData(m);
+        
+        return "halaman-registrasiMember-operator"; 
     }
 
     @RequestMapping(value = "/topup", method = RequestMethod.GET)

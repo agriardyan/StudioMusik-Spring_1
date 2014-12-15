@@ -24,7 +24,7 @@
                 <h4 class="ui top center aligned attached inverted blue block header">FORM REGISTRASI</h4>
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="registrasi" method="POST" id="registrasiForm">
+                <form class="ui fluid form segment" action="simpanMember" method="POST" id="registrasiForm">
                     <div class="two fields">
                         <div class="field">
                             <label>Nama</label>
@@ -68,6 +68,7 @@
                         <div class="field">
                             <label>Saldo Awal</label>
                             <input name="saldoAwal" placeholder="Rp 200.000,00" type="text" disabled="">
+                            <input name="saldo" value="200000" type="hidden">
                         </div>
                         <div class="field">
                             <label>Confirm Password</label>
