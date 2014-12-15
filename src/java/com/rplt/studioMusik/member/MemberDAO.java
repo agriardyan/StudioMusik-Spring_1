@@ -27,6 +27,30 @@ public class MemberDAO implements IMemberDAO<Member> {
     
     @Autowired
     private DataSource dataSource;
+    
+    
+    @Override
+    public void simpanData(Member pT) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String kode = getGeneratedKodeMember();
+        String sql = "INSERT INTO member_studio_musik VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        jdbcTemplate.update(sql, 
+                new Object[]{
+                    kode,
+                    pT.getmUsernameMember(),
+                    pT.getmPaswordMember(),
+                    pT.getmNamaMember(),
+                    pT.getmTempatTanggalLahir(),
+                    pT.getmAlamatMember(),
+                    pT.getmEmailMember(),
+                    pT.getmNomorTelepon(),
+                    pT.getmSaldoMember()
+                    
+        });
+        
+        pT.setmKodeMember(kode);
+    }
 
     @Override
     public List<Member> getDataList() {
@@ -83,6 +107,19 @@ public class MemberDAO implements IMemberDAO<Member> {
     @Override
     public void updateKurangSaldo(String pUsername, int pValue) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getGeneratedKodeMember() {
+        String sql = "SELECT to_char(max(kode_member) + 1, 'FM099999') FROM member_studio_musik";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String query = jdbcTemplate.queryForObject(sql, String.class);
+        if (query == null) {
+            return "000001";
+        } else {
+            return query;
+        }
     }
     
     public static class MemberRowMapper implements RowMapper<Member> {

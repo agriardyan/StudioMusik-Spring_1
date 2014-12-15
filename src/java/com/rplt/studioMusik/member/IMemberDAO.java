@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IMemberDAO<T> {
     
+    public String getGeneratedKodeMember();
+    public void simpanData(T pT);
     public List<T> getDataList();
     public int validateLogin(String pUsername, String pPassword);
     public String getSaldo(String pUsername);

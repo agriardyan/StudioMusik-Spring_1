@@ -5,7 +5,6 @@
  */
 package com.rplt.studioMusik.dataPersewaan;
 
-import com.rplt.studioMusik.model.DataPersewaanStudioMusik;
 import com.rplt.studioMusik.model.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
