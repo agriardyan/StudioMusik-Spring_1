@@ -50,12 +50,6 @@
             </div>
         </div>
 
-        <%
-            
-        %>
-
-
-
         <!--Script-->
         <script src="<c:out value="${pageContext.request.contextPath}/resources/semantic-ui/packaged/javascript/jquery-2.1.1.js" />" type="text/javascript"></script>
         <script src="<c:out value="${pageContext.request.contextPath}/resources/semantic-ui/packaged/javascript/semantic.js" />" type="text/javascript"></script>

@@ -11,12 +11,25 @@ import com.rplt.studioMusik.member.IMemberDAO;
 import com.rplt.studioMusik.member.Member;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,6 +57,9 @@ public class MemberController {
 
     @Autowired
     private IStudioMusikDAO<StudioMusik> studioMusik;
+    
+    @Autowired
+    private ServletConfig servletConfig;
 
     @RequestMapping(method = RequestMethod.POST)
     public String logout() {
@@ -148,7 +164,7 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public String simpanData() {
+    public String simpanData(HttpServletResponse response) {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
@@ -169,6 +185,46 @@ public class MemberController {
         pw.setmBiayaPelunasan(Integer.parseInt(biayaunfmt));
 
         persewaanStudioMusik.simpanData(pw);
+        
+        String jdbcURL = null;
+        String username = null;
+        String password = null;
+
+        Connection conn = null;
+        try {
+            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+            username = "mhs125314109";
+            password = "mhs125314109";
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection(jdbcURL, username, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
+        File reportFile = new File(servletConfig.getServletContext()
+                .getRealPath("/resources/report/nota_persewaan.jasper"));
+
+        Map parameters = new HashMap();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("P_KODESEWA", pw.getmKodeSewa());
+        byte[] bytes = null;
+        try {
+            bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), params, conn);
+        } catch (JRException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        response.setContentType("application/pdf");
+        response.setContentLength(bytes.length);
+
+        try {
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return "halaman-cetakNota-member";
     }
