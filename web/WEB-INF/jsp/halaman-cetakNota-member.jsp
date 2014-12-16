@@ -4,12 +4,6 @@
     Author     : Agustinus Agri
 --%>
 
-<%@page import="net.sf.jasperreports.engine.JasperRunManager"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.io.File"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -34,7 +28,7 @@
                 <form class="ui fluid form segment" action="halamanutamaoperator" id="cekForm">
                     <div class="fields">
                         <h2><font face="calibri"> Terima kasih </font></h2>
-                        <h4><font face="calibri"> Data penyewaan studio musik sudah disimpan</font></h4>
+                        <h4><font face="calibri"> Data persewaan studio musik sudah disimpan</font></h4>
                         <br>
                     </div>    
                     <div class="two fields">
@@ -50,9 +44,7 @@
             </div>
         </div>
 
-        <%
-            
-        %>
+
 
 
 

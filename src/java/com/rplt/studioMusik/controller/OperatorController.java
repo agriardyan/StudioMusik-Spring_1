@@ -11,12 +11,25 @@ import com.rplt.studioMusik.member.IMemberDAO;
 import com.rplt.studioMusik.member.Member;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,12 +51,16 @@ public class OperatorController {
 
     @Autowired
     private IPersewaanStudioMusikDAO<PersewaanStudioMusik> persewaanStudioMusik;
-    
+
     @Autowired
     private IStudioMusikDAO<StudioMusik> studioMusik;
-    
+
     @Autowired
     private IMemberDAO<Member> member;
+
+    @Autowired
+    private ServletConfig servletConfig;
+
 
     @RequestMapping(method = RequestMethod.POST)
     public String logout() {
@@ -108,18 +125,17 @@ public class OperatorController {
         String noTelp = request.getParameter("noTelp");
         String biaya = request.getParameter("biaya");
         String biayaunfmt = request.getParameter("biayaunfmt");
-        
+
         String[] splitTglSewa = tanggalSewa.split("[-]");
         String[] splitJamSewa = jamSewa.split("[:]");
-        
+
 //        Calendar calendar = new GregorianCalendar(Integer.parseInt(splitTglSewa[2]), Integer.parseInt(splitTglSewa[1]), Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
-        
         Calendar calendar = new GregorianCalendar(2000, 1, Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
-                
+
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        
+
         String jamSelesai = sdf.format(calendar.getTime());
-        
+
         String namaStudio = studioMusik.getNamaStudio(studio);
 
         model.addAttribute("tanggalSewa", tanggalSewa);
@@ -137,7 +153,7 @@ public class OperatorController {
     }
 
     @RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public String simpanData() {
+    public String simpanData(ModelMap model, HttpServletResponse response) {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
@@ -149,8 +165,8 @@ public class OperatorController {
         String biayaunfmt = request.getParameter("biayaunfmt");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
-        pw.setmMulaiSewa(tanggalSewa+ " " + jamSewa);
-        pw.setmSelesaiSewa(tanggalSewa+ " " + jamSelesai);
+        pw.setmMulaiSewa(tanggalSewa + " " + jamSewa);
+        pw.setmSelesaiSewa(tanggalSewa + " " + jamSelesai);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);
@@ -159,6 +175,48 @@ public class OperatorController {
 
         persewaanStudioMusik.simpanData(pw);
 
+        model.addAttribute("kodeSewa", pw.getmKodeSewa());
+
+        String jdbcURL = null;
+        String username = null;
+        String password = null;
+
+        Connection conn = null;
+        try {
+            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+            username = "mhs125314109";
+            password = "mhs125314109";
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection(jdbcURL, username, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
+        File reportFile = new File(servletConfig.getServletContext()
+                .getRealPath("/resources/report/nota_persewaan.jasper"));
+
+        Map parameters = new HashMap();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("P_KODESEWA", pw.getmKodeSewa());
+        byte[] bytes = null;
+        try {
+            bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), params, conn);
+        } catch (JRException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        response.setContentType("application/pdf");
+        response.setContentLength(bytes.length);
+
+        try {
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return "halaman-cetakNota-operator";
     }
 
@@ -166,7 +224,7 @@ public class OperatorController {
     public String registrasiMember() {
         return "halaman-registrasiMember-operator";
     }
-    
+
     @RequestMapping(value = "/simpanMember", method = RequestMethod.POST)
     public String simpanMember() {
         String username = request.getParameter("username");
@@ -177,7 +235,7 @@ public class OperatorController {
         String noTelp = request.getParameter("telepon");
         String email = request.getParameter("email");
         int saldo = Integer.parseInt(request.getParameter("saldo"));
-        
+
         Member m = new Member();
         m.setmUsernameMember(username);
         m.setmPaswordMember(password);
@@ -187,10 +245,10 @@ public class OperatorController {
         m.setmNomorTelepon(noTelp);
         m.setmEmailMember(email);
         m.setmSaldoMember(saldo);
-        
+
         member.simpanData(m);
-        
-        return "halaman-registrasiMember-operator"; 
+
+        return "halaman-konfirmasiRegistrasi-operator";
     }
 
     @RequestMapping(value = "/topup", method = RequestMethod.GET)

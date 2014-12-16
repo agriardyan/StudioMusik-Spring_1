@@ -170,7 +170,7 @@ public class MemberController {
 
         persewaanStudioMusik.simpanData(pw);
 
-        return "halaman-cetakNota-operator";
+        return "halaman-cetakNota-member";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)

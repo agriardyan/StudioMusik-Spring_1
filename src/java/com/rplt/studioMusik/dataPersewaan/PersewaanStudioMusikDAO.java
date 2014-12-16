@@ -51,6 +51,8 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
                 });
 
         pPersewaanStudioMusik.setmKodeSewa(kode);
+        
+        System.out.println(pPersewaanStudioMusik.getmKodeSewa());
 
     }
     

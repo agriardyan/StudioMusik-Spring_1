@@ -81,7 +81,7 @@
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm">
+                <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm" target="_blank">
                     <div class="two center aligned fields">
                         <div class="field">
                             <input class="ui blue submit button" type="submit" name="commit" value="KEMBALI" />
