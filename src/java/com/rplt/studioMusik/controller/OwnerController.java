@@ -8,9 +8,22 @@ package com.rplt.studioMusik.controller;
 
 import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +46,9 @@ public class OwnerController {
     @Autowired
     private IPersewaanStudioMusikDAO<PersewaanStudioMusik> persewaanStudioMusik;
     
+    @Autowired
+    private ServletConfig servletConfig;
+    
     
     @RequestMapping(method = RequestMethod.POST)
     public String logout() {
@@ -48,17 +64,58 @@ public class OwnerController {
     }
     
     @RequestMapping(value = "/lihatlaporan")
-    public String lihatLaporan(ModelMap model) {        
-        String bulan = request.getParameter("bulan");
-        String tahun = request.getParameter("tahun");
+    public String lihatLaporan(ModelMap model, HttpServletResponse response) {        
+        String tanggalAwal = request.getParameter("tanggalAwal").toUpperCase();
+        String tanggalAkhir = request.getParameter("tanggalAkhir").toUpperCase();
         
-        List<PersewaanStudioMusik> dataListByMonth = persewaanStudioMusik.getDataListByMonth(bulan, tahun);
+//        List<PersewaanStudioMusik> dataListByMonth = persewaanStudioMusik.getDataListByMonth(tanggalAwal, tanggalAkhir);
+//        
+//        model.addAttribute("bulan", tanggalAwal);
+//        model.addAttribute("tahun", tanggalAkhir);
+//        model.addAttribute("dataListByMonth", dataListByMonth);
         
-        model.addAttribute("bulan", bulan);
-        model.addAttribute("tahun", tahun);
-        model.addAttribute("dataListByMonth", dataListByMonth);
+        String jdbcURL = null;
+        String username = null;
+        String password = null;
+
+        Connection conn = null;
+        try {
+            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+            username = "mhs125314109";
+            password = "mhs125314109";
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection(jdbcURL, username, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+//            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
+        File reportFile = new File(servletConfig.getServletContext()
+                .getRealPath("/resources/report/laporan_pemasukan.jasper"));
+
+        Map parameters = new HashMap();
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("TANGGAL_AWAL", tanggalAwal);
+        params.put("TANGGAL_AKHIR", tanggalAkhir);
+        byte[] bytes = null;
+        try {
+            bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), params, conn);
+        } catch (JRException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        response.setContentType("application/pdf");
+        response.setContentLength(bytes.length);
+
+        try {
+            ServletOutputStream outStream = response.getOutputStream();
+            outStream.write(bytes, 0, bytes.length);
+            outStream.flush();
+            outStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        return "halaman-utama-owner";
+        return "halaman-cetakReport-owner";
     }
     
     @RequestMapping(value = "/tampilLaporan")

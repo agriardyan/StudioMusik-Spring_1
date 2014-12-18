@@ -21,6 +21,6 @@ public interface IPersewaanStudioMusikDAO<T> {
     public boolean cekKetersediaanJadwal(T pPersewaanStudioMusik);
     public int hitungBiayaSewa(int pDurasi, String pKodeStudio);
     public String getGeneratedKodeSewa();
-    public List<T> getDataListByMonth(String pBulan, String pTahun);
+    public List<T> getDataListByMonth(String pDate);
     
 }

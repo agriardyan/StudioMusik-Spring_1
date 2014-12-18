@@ -6,6 +6,7 @@
 
 package com.rplt.studioMusik.member;
 
+import com.rplt.studioMusik.model.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -98,6 +99,14 @@ public class MemberDAO implements IMemberDAO<Member> {
         saldo = jdbcTemplate.queryForObject(sql, new Object[]{pUsername}, String.class);
         return saldo;
     }
+    
+    @Override
+    public int simulateKurangSaldo(String pUsername, int pValue) {
+        String sql = "SELECT saldo_member FROM MEMBER_STUDIO_MUSIK WHERE username_member = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        int query = jdbcTemplate.queryForObject(sql, Integer.class, pUsername);
+        return query - pValue;
+    }
 
     @Override
     public void updateTambahSaldo(String pUsername, int pValue) {
@@ -106,7 +115,19 @@ public class MemberDAO implements IMemberDAO<Member> {
 
     @Override
     public void updateKurangSaldo(String pUsername, int pValue) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DataSource dataSource = DatabaseConnection.getmDataSource();
+        String sql = "UPDATE member_studio_musik SET saldo_member = ? WHERE username_member = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(sql, 
+                new Object[]{
+                    pValue,
+                    pUsername
+                });
+    }
+    
+    public static void main(String[] args) {
+        MemberDAO me = new MemberDAO();
+        me.updateKurangSaldo("ECHOSP", 180000);
     }
 
     @Override
@@ -120,6 +141,17 @@ public class MemberDAO implements IMemberDAO<Member> {
         } else {
             return query;
         }
+    }
+
+    @Override
+    public List<Member> getDataListbyUser(String pUsername) {
+        List<Member> memberList = new ArrayList<Member>();
+
+        String sql = "SELECT * FROM member_studio_musik WHERE username_member = ?";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        memberList = jdbcTemplate.query(sql, new Object[] {pUsername.toUpperCase()}, new MemberRowMapper());
+        return memberList;
     }
     
     public static class MemberRowMapper implements RowMapper<Member> {

@@ -20,9 +20,12 @@ public interface IMemberDAO<T> {
     public String getGeneratedKodeMember();
     public void simpanData(T pT);
     public List<T> getDataList();
+    public List<T> getDataListbyUser(String pUsername);
     public int validateLogin(String pUsername, String pPassword);
     public String getSaldo(String pUsername);
+    public int simulateKurangSaldo(String pUsername, int pValue);
     public void updateTambahSaldo(String pUsername, int pValue);
     public void updateKurangSaldo(String pUsername, int pValue);
+    
     
 }

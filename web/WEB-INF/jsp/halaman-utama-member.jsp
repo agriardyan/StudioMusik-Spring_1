@@ -72,7 +72,7 @@
                         <div class="field">
                             <!--DISINI UNTUK INFORMASI BIAYA--> 
                             <h4 style="color: red">${ketersediaan}</h4>
-                            <h4 style="color: red">${biaya}</h4>
+                            <h4 style="color: red">Biaya sewa sebesar Rp ${biaya}</h4>
                         </div>
                     </div>
                 </form>
@@ -88,11 +88,11 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Nama Penyewa</label>
-                            <input type="text" name="namaPenyewa" placeholder="Nama Penyewa" ${disable} />
+                            <input type="text" name="namaPenyewa" placeholder="Nama Penyewa" value="${namaPenyewa}" ${disable}  />
                         </div>
                         <div class="field">
                             <label>Nomor Telepon</label>
-                            <input type="text" name="noTelp" placeholder="Nomor Telepon Penyewa" ${disable} />
+                            <input type="text" name="noTelp" placeholder="Nomor Telepon Penyewa" value="${noTelp}" ${disable} />
                         </div>
                     </div>
                     <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />

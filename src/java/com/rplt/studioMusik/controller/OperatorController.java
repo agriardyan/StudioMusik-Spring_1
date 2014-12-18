@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,6 +76,23 @@ public class OperatorController {
         model.addAttribute("disable", "disabled");
         return "halaman-utama-operator-alternate";
     }
+    
+    @RequestMapping(value = "/halamanLihatJadwal", method = {RequestMethod.GET})
+    public String halamanLihatJadwal(ModelMap model) {
+        return "halaman-lihatJadwal-operator";
+    }
+    
+    @RequestMapping(value = "/lihatJadwal", method = {RequestMethod.GET})
+    public String lihatJadwal(ModelMap model) {
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
+        
+        List<PersewaanStudioMusik> dataListByDate = persewaanStudioMusik.getDataListByMonth(tanggalSewa);
+        
+        model.addAttribute("tanggalSewa", tanggalSewa);
+        model.addAttribute("dataListByDate", dataListByDate);
+        
+        return "halaman-lihatJadwal-operator";
+    }
 
     @RequestMapping(value = "/cekJadwal", method = RequestMethod.GET)
     public String cekJadwal(ModelMap model) {
@@ -103,7 +121,7 @@ public class OperatorController {
             model.addAttribute("jamSewa", jamSewa);
             model.addAttribute("durasiSewa", durasiSewa);
             model.addAttribute("studio", studio);
-            model.addAttribute("biaya", "Biaya sewa sebesar : Rp " + biaya);
+            model.addAttribute("biaya", biaya);
             model.addAttribute("ketersediaan", "Studio Tersedia!");
             model.addAttribute("biayaunfmt", biayaUnfmt);
             model.addAttribute("disable", "");
@@ -151,6 +169,32 @@ public class OperatorController {
 
         return "halaman-summary-operator";
     }
+    
+    @RequestMapping(value = "/revisi", method = {RequestMethod.GET, RequestMethod.POST})
+    public String revisi(ModelMap model) {
+//        model.addAttribute("disable", "disabled");
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
+        String jamSewa = request.getParameter("jamSewa");
+        String durasiSewa = request.getParameter("durasiSewa");
+        String studio = request.getParameter("studio");
+        String namaPenyewa = request.getParameter("namaPenyewa").toUpperCase();
+        String noTelp = request.getParameter("noTelp");
+        String biaya = request.getParameter("biaya");
+        String biayaunfmt = request.getParameter("biayaunfmt");
+
+        model.addAttribute("tanggalSewa", tanggalSewa);
+        model.addAttribute("jamSewa", jamSewa);
+        model.addAttribute("durasiSewa", durasiSewa);
+        model.addAttribute("studio", studio);
+        model.addAttribute("biaya", biaya);
+        model.addAttribute("ketersediaan", "Studio Tersedia!");
+        model.addAttribute("biayaunfmt", biayaunfmt);
+        model.addAttribute("disable", "");
+        model.addAttribute("namaPenyewa", namaPenyewa);
+        model.addAttribute("noTelp", noTelp);
+
+        return "halaman-utama-operator-alternate";
+    }
 
     @RequestMapping(value = "/simpan", method = RequestMethod.POST)
     public String simpanData(ModelMap model, HttpServletResponse response) {
@@ -181,6 +225,15 @@ public class OperatorController {
         String username = null;
         String password = null;
 
+        return "halaman-cetakNota-operator";
+    }
+    
+    @RequestMapping(value = "/cetakNota", method = RequestMethod.GET)
+    public String cetakNota(HttpServletResponse response) {
+        String jdbcURL = null;
+        String username = null;
+        String password = null;
+
         Connection conn = null;
         try {
             jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -197,7 +250,7 @@ public class OperatorController {
 
         Map parameters = new HashMap();
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("P_KODESEWA", pw.getmKodeSewa());
+        params.put("P_KODESEWA", request.getParameter("kodeSewa"));
         byte[] bytes = null;
         try {
             bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), params, conn);
@@ -214,9 +267,8 @@ public class OperatorController {
             outStream.flush();
             outStream.close();
         } catch (IOException ex) {
-            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return "halaman-cetakNota-operator";
     }
 
@@ -250,14 +302,43 @@ public class OperatorController {
 
         return "halaman-konfirmasiRegistrasi-operator";
     }
+    
+    @RequestMapping(value = "/cariUser", method = RequestMethod.POST)
+    public String cariUser(ModelMap model){
+        String username = request.getParameter("user");
+        List<Member> memberList = member.getDataListbyUser("user");
+        model.addAttribute("user", memberList.get(0).getmUsernameMember());
+        model.addAttribute("id", memberList.get(0).getmKodeMember());
+        model.addAttribute("nama", memberList.get(0).getmNamaMember());
+        model.addAttribute("saldo", memberList.get(0).getmSaldoMember());
+        
+        return "halaman-topUpSaldoMember-operator";
+    }
 
     @RequestMapping(value = "/topup", method = RequestMethod.GET)
-    public String topUpSaldoMember() {
-        return "under-construction";
+    public String topUpSaldoMember(ModelMap model) {
+                
+        return "halaman-topUpSaldoMember-operator";
     }
+    
+    @RequestMapping(value = "/updateSaldo", method = RequestMethod.POST)
+    public String updateSaldo(ModelMap model){
+        String user = request.getParameter("userT");
+        int pValue = Integer.parseInt(request.getParameter("saldoT")) + Integer.parseInt(request.getParameter("saldo"));
+        member.updateTambahSaldo(user, pValue);
+        List<Member> memberList = member.getDataListbyUser("user");
+        model.addAttribute("user", memberList.get(0).getmUsernameMember());
+        model.addAttribute("id", memberList.get(0).getmKodeMember());
+        model.addAttribute("nama", memberList.get(0).getmNamaMember());
+        model.addAttribute("saldo", memberList.get(0).getmSaldoMember());
+        
+        return "halaman-topUpSaldoMember-operator";
+    }
+
 
 //    @RequestMapping(value = "/pelunasan", method = RequestMethod.GET)
 //    public String pelunasan() {
 //        return "halaman-pelunasan-operator";
 //    }
+
 }

@@ -25,6 +25,9 @@
                     <a class="item" href="topup"><i class="dollar icon"></i>Top Up Saldo</a>
                 </div>
             </div>
+            <a class="active item" href="halamanLihatJadwal">
+                <i class="book icon"></i> LIHAT JADWAL
+            </a>
             <div class="right menu">
                 <form action="logout" method="POST">
                     <div class="ui dropdown link item">

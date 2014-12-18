@@ -17,14 +17,17 @@
 		 whenNoDataType="NoPages"
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.scriptlethandling" value="0" />
 	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
+	<parameter name="TANGGAL_AWAL" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="TANGGAL_AKHIR" isForPrompting="true" class="java.lang.String"/>
 	<queryString><![CDATA[SELECT kode_sewa, kode_studio, nama_penyewa, nomor_telepon, to_char(mulai_sewa, 'dd-MON-yyyy hh24:mi') AS mulai_sewa, 
-to_char(selesai_sewa, 'dd-MON-yyyy hh24:mi') AS selesai_sewa, biaya_pelunasan FROM persewaan_studio_musik ]]></queryString>
+to_char(selesai_sewa, 'dd-MON-yyyy hh24:mi') AS selesai_sewa, biaya_pelunasan FROM persewaan_studio_musik 
+WHERE mulai_sewa BETWEEN to_date($P{TANGGAL_AWAL} || ' 00:00', 'dd-MON-yyyy hh24:mi') AND to_date($P{TANGGAL_AKHIR} || ' 23:59', 'dd-MON-yyyy hh24:mi')]]></queryString>
 
 	<field name="KODE_SEWA" class="java.lang.String"/>
 	<field name="KODE_STUDIO" class="java.lang.String"/>
@@ -72,30 +75,56 @@ to_char(selesai_sewa, 'dd-MON-yyyy hh24:mi') AS selesai_sewa, biaya_pelunasan FR
 			<band height="50"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
-						x="164"
+						x="61"
 						y="0"
-						width="48"
+						width="93"
 						height="50"
 						key="staticText-3"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[BULAN :]]></text>
+				<text><![CDATA[TANGGAL AWAL :]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
-						x="313"
+						x="276"
 						y="0"
-						width="47"
+						width="97"
 						height="50"
 						key="staticText-4"/>
 					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
 					<textElement verticalAlignment="Middle">
 						<font pdfFontName="Helvetica-Bold" isBold="true"/>
 					</textElement>
-				<text><![CDATA[TAHUN :]]></text>
+				<text><![CDATA[TANGGAL AKHIR :]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="156"
+						y="0"
+						width="117"
+						height="50"
+						key="textField-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{TANGGAL_AWAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="375"
+						y="0"
+						width="116"
+						height="50"
+						key="textField-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{TANGGAL_AKHIR}]]></textFieldExpression>
+				</textField>
 			</band>
 		</pageHeader>
 		<columnHeader>

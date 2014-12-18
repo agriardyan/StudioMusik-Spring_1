@@ -1,5 +1,5 @@
 <%-- 
-    Document   : halaman-toUpSaldoMember-operator
+    Document   : halaman-registrasiMember-operator
     Created on : Nov 15, 2014, 10:26:46 PM
     Author     : Lorencius
 --%>
@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Top Up Member</title>
+        <title>Edit Data Member</title>
         <link rel="shortcut icon" href="img/OM-Item_Logo.png" type="image/png">
         <link href="<c:out value="${pageContext.request.contextPath}/resources/semantic-ui/packaged/css/semantic.css" />" rel="stylesheet" type="text/css">
         <link href="<c:out value="${pageContext.request.contextPath}/resources/date/redmond.datepick.css" />" rel="stylesheet" type="text/css">
@@ -130,7 +130,7 @@
 
                 //Activated tambah saldo button 
             <% if (request.getParameter("user") != null) { %>
-                $(document.getElementById("tambahSaldo")).removeClass("disabled");
+                    $(document.getElementById("tambahSaldo")).removeClass("disabled");
             <%    }%>
 
                 //Show modal onclick tambah saldo

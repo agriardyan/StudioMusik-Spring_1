@@ -32,8 +32,8 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     public void simpanData(PersewaanStudioMusik pPersewaanStudioMusik) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String kode = getGeneratedKodeSewa();
-        
-        System.out.println("kode : "+kode);
+
+        System.out.println("kode : " + kode);
 
         String sql = "insert into PERSEWAAN_STUDIO_MUSIK values(?, ?, ?, ?, to_date(?, 'dd-MON-yyyy HH24:MI'), to_date(?, 'dd-MON-yyyy HH24:MI'), ?)";
 
@@ -51,11 +51,11 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
                 });
 
         pPersewaanStudioMusik.setmKodeSewa(kode);
-        
+
         System.out.println(pPersewaanStudioMusik.getmKodeSewa());
 
     }
-    
+
     public static void main(String[] args) {
         PersewaanStudioMusik ps = new PersewaanStudioMusik();
         ps.setmKodeStudio("102");
@@ -63,7 +63,7 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
         ps.setmJamMulaiSewa("12:00");
         ps.setmDurasi(3);
         boolean cek = new PersewaanStudioMusikDAO().cekKetersediaanJadwal(ps);
-        
+
         System.out.println(cek);
     }
 
@@ -72,13 +72,12 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
         DataSource dataSource = DatabaseConnection.getmDataSource();
         List<PersewaanStudioMusik> pegawaiList = new ArrayList<PersewaanStudioMusik>();
 
-
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         String sql = "SELECT to_char((to_date(?, 'HH24:MI') + ? / 24), 'HH24:MI') FROM dual";
 
         String jamSelesai = jdbcTemplate.queryForObject(sql, new Object[]{pPersewaanStudioMusik.getmJamMulaiSewa(), pPersewaanStudioMusik.getmDurasi()}, String.class);
-        
+
         System.out.println(jamSelesai);
 
         sql = "select * from PERSEWAAN_STUDIO_MUSIK where KODE_STUDIO = ? "
@@ -87,7 +86,6 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
                 + "(to_char(MULAI_SEWA, 'hh24:mi') BETWEEN ? AND ? "
                 + "and to_char(SELESAI_SEWA, 'hh24:mi') > ? "
                 + "and to_char(MULAI_SEWA, 'hh24:mi') < ? )";
-
 
         pegawaiList = jdbcTemplate.query(sql,
                 new Object[]{
@@ -99,8 +97,8 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
                     jamSelesai
                 },
                 new PersewaanStudioMusikRowMapper());
-        
-        System.out.println("list size : "+pegawaiList.size());
+
+        System.out.println("list size : " + pegawaiList.size());
 
         if (pegawaiList.isEmpty()) {
             return true;
@@ -115,8 +113,7 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
         String sql = "SELECT (? * tarif_per_jam) FROM studio_musik WHERE kode_studio = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        String query = jdbcTemplate.queryForObject(sql, new Object[]{pDurasi, pKodeStudio}, String.class);
-        return Integer.parseInt(query);
+        return jdbcTemplate.queryForObject(sql, new Object[]{pDurasi, pKodeStudio}, Integer.class);
     }
 
     @Override
@@ -133,16 +130,14 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
     }
 
     @Override
-    public List<PersewaanStudioMusik> getDataListByMonth(String pBulan, String pTahun) {
-        List<PersewaanStudioMusik> pegawaiList = new ArrayList<PersewaanStudioMusik>();
+    public List<PersewaanStudioMusik> getDataListByMonth(String pDate) {
 
         String sql = "select KODE_SEWA, KODE_STUDIO, NAMA_PENYEWA, NOMOR_TELEPON, to_char(MULAI_SEWA, 'dd-MON-yyyy HH24:MI'), to_char(SELESAI_SEWA, 'dd-MON-yyyy HH24:MI'), BIAYA_PELUNASAN "
                 + "from PERSEWAAN_STUDIO_MUSIK "
-                + "WHERE to_char(mulai_sewa, 'mm-yyyy') = '" + pBulan + "-" + pTahun + "' ORDER BY mulai_sewa ASC";
+                + "WHERE to_char(mulai_sewa, 'dd-MON-yyyy') = ? ORDER BY mulai_sewa ASC";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        pegawaiList = jdbcTemplate.query(sql, new PersewaanStudioMusikRowMapper());
-        return pegawaiList;
+        return jdbcTemplate.query(sql, new Object[]{pDate}, new PersewaanStudioMusikRowMapper());
     }
 
     public static class PersewaanStudioMusikRowMapper implements RowMapper<PersewaanStudioMusik> {
@@ -152,24 +147,23 @@ public class PersewaanStudioMusikDAO implements IPersewaanStudioMusikDAO<Persewa
             PersewaanStudioMusikExtractor persewaanStudioMusikExtractor = new PersewaanStudioMusikExtractor();
             return persewaanStudioMusikExtractor.extractData(rs);
         }
+    }
 
-        public static class PersewaanStudioMusikExtractor implements ResultSetExtractor<PersewaanStudioMusik> {
+    public static class PersewaanStudioMusikExtractor implements ResultSetExtractor<PersewaanStudioMusik> {
 
-            @Override
-            public PersewaanStudioMusik extractData(ResultSet rs) throws SQLException, DataAccessException {
-                PersewaanStudioMusik persewaanStudioMusik = new PersewaanStudioMusik();
+        @Override
+        public PersewaanStudioMusik extractData(ResultSet rs) throws SQLException, DataAccessException {
+            PersewaanStudioMusik persewaanStudioMusik = new PersewaanStudioMusik();
 
-                persewaanStudioMusik.setmKodeSewa(rs.getString(1));
-                persewaanStudioMusik.setmKodeStudio(rs.getString(2));
-                persewaanStudioMusik.setmNamaPenyewa(rs.getString(3));
-                persewaanStudioMusik.setmNomorTeleponPenyewa(rs.getString(4));
-                persewaanStudioMusik.setmMulaiSewa(rs.getString(5));
-                persewaanStudioMusik.setmSelesaiSewa(rs.getString(6));
-                persewaanStudioMusik.setmBiayaPelunasan(Integer.parseInt(rs.getString(7)));
+            persewaanStudioMusik.setmKodeSewa(rs.getString(1));
+            persewaanStudioMusik.setmKodeStudio(rs.getString(2));
+            persewaanStudioMusik.setmNamaPenyewa(rs.getString(3));
+            persewaanStudioMusik.setmNomorTeleponPenyewa(rs.getString(4));
+            persewaanStudioMusik.setmMulaiSewa(rs.getString(5));
+            persewaanStudioMusik.setmSelesaiSewa(rs.getString(6));
+            persewaanStudioMusik.setmBiayaPelunasan(Integer.parseInt(rs.getString(7)));
 
-                return persewaanStudioMusik;
-            }
-
+            return persewaanStudioMusik;
         }
 
     }

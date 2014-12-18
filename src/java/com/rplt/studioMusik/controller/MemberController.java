@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +58,7 @@ public class MemberController {
 
     @Autowired
     private IStudioMusikDAO<StudioMusik> studioMusik;
-    
+
     @Autowired
     private ServletConfig servletConfig;
 
@@ -73,6 +74,23 @@ public class MemberController {
     public String halamanUtamaMember(ModelMap model) {
         model.addAttribute("disable", "disabled");
         return "halaman-utama-member";
+    }
+    
+    @RequestMapping(value = "/halamanLihatJadwal", method = {RequestMethod.GET})
+    public String halamanLihatJadwal(ModelMap model) {
+        return "halaman-lihatJadwal-member";
+    }
+    
+    @RequestMapping(value = "/lihatJadwal", method = {RequestMethod.GET})
+    public String lihatJadwal(ModelMap model) {
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
+        
+        List<PersewaanStudioMusik> dataListByDate = persewaanStudioMusik.getDataListByMonth(tanggalSewa);
+        
+        model.addAttribute("tanggalSewa", tanggalSewa);
+        model.addAttribute("dataListByDate", dataListByDate);
+        
+        return "halaman-lihatJadwal-member";
     }
 
     @RequestMapping(value = "/cekJadwal", method = RequestMethod.GET)
@@ -102,7 +120,7 @@ public class MemberController {
             model.addAttribute("jamSewa", jamSewa);
             model.addAttribute("durasiSewa", durasiSewa);
             model.addAttribute("studio", studio);
-            model.addAttribute("biaya", "Biaya sewa sebesar : Rp " + biaya);
+            model.addAttribute("biaya", biaya);
             model.addAttribute("ketersediaan", "Studio Tersedia!");
             model.addAttribute("biayaunfmt", biayaUnfmt);
             model.addAttribute("disable", "");
@@ -125,11 +143,19 @@ public class MemberController {
         String biaya = request.getParameter("biaya");
         String biayaunfmt = request.getParameter("biayaunfmt");
 
+        int sisaSaldo = member.simulateKurangSaldo(session.getAttribute("username").toString(), Integer.parseInt(biayaunfmt));
+        DecimalFormat df = new DecimalFormat("###,###.00");
+
+        String remainSaldo = df.format(sisaSaldo);
+
+        remainSaldo = remainSaldo.replace(".", "&");
+        remainSaldo = remainSaldo.replace(",", ".");
+        remainSaldo = remainSaldo.replace("&", ",");
+
         String[] splitTglSewa = tanggalSewa.split("[-]");
         String[] splitJamSewa = jamSewa.split("[:]");
 
 //        Calendar calendar = new GregorianCalendar(Integer.parseInt(splitTglSewa[2]), Integer.parseInt(splitTglSewa[1]), Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
-        
         Calendar calendar = new GregorianCalendar(2000, 1, Integer.parseInt(splitTglSewa[0]), Integer.parseInt(splitJamSewa[0]) + Integer.parseInt(durasiSewa), Integer.parseInt(splitJamSewa[1]));
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -140,10 +166,10 @@ public class MemberController {
 
         String saldo = member.getSaldo(session.getAttribute("username").toString().toUpperCase());
         String saldoUnformatted = saldo;
-        
+
         saldoUnformatted = saldoUnformatted.replace(".", "");
         saldoUnformatted = saldoUnformatted.replace(",", "");
-        
+
         saldo = saldo.replace(".", "&");
         saldo = saldo.replace(",", ".");
         saldo = saldo.replace("&", ",");
@@ -159,12 +185,40 @@ public class MemberController {
         model.addAttribute("biaya", biaya);
         model.addAttribute("biayaunfmt", biayaunfmt);
         model.addAttribute("saldo", saldo);
+        model.addAttribute("sisaSaldo", sisaSaldo);
+        model.addAttribute("remainSaldo", remainSaldo);
 
         return "halaman-summary-member";
     }
 
+    @RequestMapping(value = "/revisi", method = {RequestMethod.GET, RequestMethod.POST})
+    public String revisi(ModelMap model) {
+//        model.addAttribute("disable", "disabled");
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
+        String jamSewa = request.getParameter("jamSewa");
+        String durasiSewa = request.getParameter("durasiSewa");
+        String studio = request.getParameter("studio");
+        String namaPenyewa = request.getParameter("namaPenyewa").toUpperCase();
+        String noTelp = request.getParameter("noTelp");
+        String biaya = request.getParameter("biaya");
+        String biayaunfmt = request.getParameter("biayaunfmt");
+
+        model.addAttribute("tanggalSewa", tanggalSewa);
+        model.addAttribute("jamSewa", jamSewa);
+        model.addAttribute("durasiSewa", durasiSewa);
+        model.addAttribute("studio", studio);
+        model.addAttribute("biaya", biaya);
+        model.addAttribute("ketersediaan", "Studio Tersedia!");
+        model.addAttribute("biayaunfmt", biayaunfmt);
+        model.addAttribute("disable", "");
+        model.addAttribute("namaPenyewa", namaPenyewa);
+        model.addAttribute("noTelp", noTelp);
+
+        return "halaman-utama-member";
+    }
+
     @RequestMapping(value = "/simpan", method = RequestMethod.POST)
-    public String simpanData(HttpServletResponse response) {
+    public String simpanData(ModelMap model) {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
@@ -174,10 +228,11 @@ public class MemberController {
         String noTelp = request.getParameter("noTelp");
         String biaya = request.getParameter("biaya");
         String biayaunfmt = request.getParameter("biayaunfmt");
+        String saldo = request.getParameter("sisaSaldo");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
-        pw.setmMulaiSewa(tanggalSewa+ " " + jamSewa);
-        pw.setmSelesaiSewa(tanggalSewa+ " " + jamSelesai);
+        pw.setmMulaiSewa(tanggalSewa + " " + jamSewa);
+        pw.setmSelesaiSewa(tanggalSewa + " " + jamSelesai);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);
@@ -185,7 +240,15 @@ public class MemberController {
         pw.setmBiayaPelunasan(Integer.parseInt(biayaunfmt));
 
         persewaanStudioMusik.simpanData(pw);
-        
+        model.addAttribute("kodeSewa", pw.getmKodeSewa());
+
+        member.updateKurangSaldo(session.getAttribute("username").toString(), Integer.parseInt(saldo));
+
+        return "halaman-cetakNota-member";
+    }
+    
+    @RequestMapping(value = "/cetakNota", method = RequestMethod.GET)
+    public String cetakNota(HttpServletResponse response) {
         String jdbcURL = null;
         String username = null;
         String password = null;
@@ -206,7 +269,7 @@ public class MemberController {
 
         Map parameters = new HashMap();
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("P_KODESEWA", pw.getmKodeSewa());
+        params.put("P_KODESEWA", request.getParameter("kodeSewa"));
         byte[] bytes = null;
         try {
             bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), params, conn);
@@ -223,10 +286,9 @@ public class MemberController {
             outStream.flush();
             outStream.close();
         } catch (IOException ex) {
-            Logger.getLogger(OperatorController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MemberController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return "halaman-cetakNota-member";
+        return "halaman-cetakNota-operator";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)

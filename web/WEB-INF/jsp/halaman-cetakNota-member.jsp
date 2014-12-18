@@ -18,14 +18,14 @@
     </head>
     <body>
         <!--Menu bar-->
-        <%@include file="menubar-operator.jsp" %>
+        <%@include file="menubar-member.jsp" %>
         <!--End of Menu bar-->
 
         <div class="ui one column page grid" id="formCek">
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="halamanutamaoperator" id="cekForm">
+                <form class="ui fluid form segment" action="cetakNota" id="cekForm" target="_blank">
                     <div class="fields">
                         <h2><font face="calibri"> Terima kasih </font></h2>
                         <h4><font face="calibri"> Data persewaan studio musik sudah disimpan</font></h4>
@@ -34,7 +34,8 @@
                     <div class="two fields">
                         <div class="field">
                             <br>
-                            <input class="ui blue submit button" value="KEMBALI">
+                            <input type="hidden" name="kodeSewa" value="${kodeSewa}">
+                            <input class="ui blue submit button" value="CETAK NOTA">
                         </div>
                         <div class="field">
                             

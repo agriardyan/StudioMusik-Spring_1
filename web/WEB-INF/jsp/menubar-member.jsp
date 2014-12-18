@@ -18,12 +18,15 @@
             <a class="active item" href="halamanutamamember">
                 <i class="book icon"></i> SEWA
             </a>
-            <div class="ui pointing dropdown link item">
+            <a class="active item" href="halamanLihatJadwal">
+                <i class="book icon"></i> LIHAT JADWAL
+            </a>
+<!--            <div class="ui pointing dropdown link item">
                 <i class="user icon"></i> MEMBER <i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="update"><i class="add icon"></i>Update Data Member</a>
                 </div>
-            </div>
+            </div>-->
             <div class="right menu">
                 <form action="logout" method="POST">
                     <div class="ui dropdown link item">

@@ -31,7 +31,7 @@
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="halamanutamaoperator" id="cekForm">
+                <form class="ui fluid form segment" action="cetakNota" id="cekForm" target="_blank">
                     <div class="fields">
                         <h2><font face="calibri"> Terima kasih </font></h2>
                         <h4><font face="calibri"> Data penyewaan studio musik sudah disimpan</font></h4>
@@ -40,7 +40,8 @@
                     <div class="two fields">
                         <div class="field">
                             <br>
-                            <input class="ui blue submit button" value="KEMBALI">
+                            <input class="ui blue submit button" value="CETAK NOTA">
+                            <input type="hidden" name="kodeSewa" value="${kodeSewa}">
                         </div>
                         <div class="field">
                             

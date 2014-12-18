@@ -70,7 +70,7 @@
                         </div>
                         <div class="field">
                             <label>Sisa Saldo</label>
-                            <h3>${saldo}</h3>
+                            <h3>Sisa saldo anda setelah transaksi adalah Rp ${remainSaldo}</h3>
                         </div>
                     </div>
 
@@ -82,24 +82,41 @@
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm" target="_blank">
-                    <div class="two center aligned fields">
+
+                <div class="two center aligned fields">
+                    <form class="ui fluid form segment" action="revisi" method="POST" id="penyewaForm">
                         <div class="field">
-                            <input class="ui blue submit button" type="submit" name="commit" value="KEMBALI" />
+                            <input class="ui blue submit button" type="submit" name="commit" value="REVISI" />
                         </div>
+                        <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
+                        <input type="hidden" name="jamSewa" value="${jamSewa}" />
+                        <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
+                        <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
+                        <input type="hidden" name="studio" value="${studio}" />
+                        <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
+                        <input type="hidden" name="noTelp" value="${noTelp}" />
+                        <input type="hidden" name="biaya" value="${biaya}" />
+                        <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
+                        <input type="hidden" name="sisaSaldo" value="${sisaSaldo}" />
+                    </form>
+                    <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm">
                         <div class="field">
-                            <input class="ui blue submit button" type="submit" name="commit" value="OK, CETAK NOTA!" />
+                            <input class="ui blue submit button" type="submit" name="commit" value="SIMPAN DATA" />
                         </div>
-                    </div>
-                    <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
-                    <input type="hidden" name="jamSewa" value="${jamSewa}" />
-                    <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
-                    <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
-                    <input type="hidden" name="studio" value="${studio}" />
-                    <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
-                    <input type="hidden" name="noTelp" value="${noTelp}" />
-                    <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
-                </form>
+                        <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
+                        <input type="hidden" name="jamSewa" value="${jamSewa}" />
+                        <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
+                        <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
+                        <input type="hidden" name="studio" value="${studio}" />
+                        <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
+                        <input type="hidden" name="noTelp" value="${noTelp}" />
+                        <input type="hidden" name="biaya" value="${biaya}" />
+                        <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
+                        <input type="hidden" name="sisaSaldo" value="${sisaSaldo}" />
+                    </form>
+                </div>
+
+
             </div>
         </div>
 
