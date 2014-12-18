@@ -15,17 +15,17 @@
     <body>
         <!--Menu bar-->
         <div class="ui menu">
-            <a class="active item" href="halamanutamaoperator">
+            <a class="item" id="op" href="halamanutamaoperator">
                 <i class="book icon"></i> SEWA
             </a>
             <div class="ui pointing dropdown link item">
                 <i class="user icon"></i> MEMBER <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a class="item" href="registrasi"><i class="add icon"></i>Registrasi Member</a>
-                    <a class="item" href="topup"><i class="dollar icon"></i>Top Up Saldo</a>
+                    <a class="item" id="reg" href="registrasi"><i class="add icon"></i>Registrasi Member</a>
+                    <a class="item" id="topup" href="topup"><i class="dollar icon"></i>Top Up Saldo</a>
                 </div>
             </div>
-            <a class="active item" href="halamanLihatJadwal">
+            <a class="item" id="sche" href="halamanLihatJadwal">
                 <i class="book icon"></i> LIHAT JADWAL
             </a>
             <div class="right menu">

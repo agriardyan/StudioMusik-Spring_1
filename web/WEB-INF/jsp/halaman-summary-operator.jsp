@@ -66,7 +66,7 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Biaya Sewa</label>
-                            <h3>${biaya}</h3>
+                            <h3>Biaya sewa sebesar Rp ${biaya}</h3>
                         </div>
                         <div class="field">
                             <!--SALDO GOES HERE-->
@@ -85,7 +85,7 @@
                 <div class="two center aligned fields">
                     <div class="field">
                         <form class="ui fluid form segment" action="revisi" method="POST" id="penyewaForm" >
-                            <input class="ui blue submit button" type="submit" name="commit" value="KEMBALI" />
+                            <input class="ui blue submit button" type="submit" name="commit" value="REVISI" />
                             <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
                             <input type="hidden" name="jamSewa" value="${jamSewa}" />
                             <input type="hidden" name="durasiSewa" value="${durasiSewa}" />

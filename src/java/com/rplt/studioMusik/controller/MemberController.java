@@ -9,6 +9,7 @@ import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
 import com.rplt.studioMusik.member.IMemberDAO;
 import com.rplt.studioMusik.member.Member;
+import com.rplt.studioMusik.model.DatabaseConnection;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
 import java.io.File;
@@ -96,12 +97,13 @@ public class MemberController {
     @RequestMapping(value = "/cekJadwal", method = RequestMethod.GET)
     public String cekJadwal(ModelMap model) {
 
-        String tanggalSewa = request.getParameter("tanggalSewa");
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
         String studio = request.getParameter("studio");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
+        pw.setmJamMulaiSewa(jamSewa);
         pw.setmMulaiSewa(tanggalSewa);
         pw.setmSelesaiSewa(jamSewa);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
@@ -229,10 +231,14 @@ public class MemberController {
         String biaya = request.getParameter("biaya");
         String biayaunfmt = request.getParameter("biayaunfmt");
         String saldo = request.getParameter("sisaSaldo");
+        
+        System.err.println("JAM SEWA : "+jamSewa);
+        System.err.println("JAM SELESAI : "+jamSelesai);
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
         pw.setmMulaiSewa(tanggalSewa + " " + jamSewa);
         pw.setmSelesaiSewa(tanggalSewa + " " + jamSelesai);
+        System.err.println("MULAI SEWA : "+pw.getmMulaiSewa());
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);
@@ -249,20 +255,7 @@ public class MemberController {
     
     @RequestMapping(value = "/cetakNota", method = RequestMethod.GET)
     public String cetakNota(HttpServletResponse response) {
-        String jdbcURL = null;
-        String username = null;
-        String password = null;
-
-        Connection conn = null;
-        try {
-            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
-            username = "mhs125314109";
-            password = "mhs125314109";
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection(jdbcURL, username, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Connection conn = DatabaseConnection.getmConnection();
 //            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
         File reportFile = new File(servletConfig.getServletContext()
                 .getRealPath("/resources/report/nota_persewaan.jasper"));

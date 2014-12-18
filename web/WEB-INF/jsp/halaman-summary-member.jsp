@@ -66,7 +66,7 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Biaya Sewa</label>
-                            <h3>${biaya}</h3>
+                            <h3>Biaya sewa sebesar Rp ${biaya}</h3>
                         </div>
                         <div class="field">
                             <label>Sisa Saldo</label>

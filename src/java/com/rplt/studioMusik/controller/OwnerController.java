@@ -8,6 +8,7 @@ package com.rplt.studioMusik.controller;
 
 import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
+import com.rplt.studioMusik.model.DatabaseConnection;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -74,20 +75,7 @@ public class OwnerController {
 //        model.addAttribute("tahun", tanggalAkhir);
 //        model.addAttribute("dataListByMonth", dataListByMonth);
         
-        String jdbcURL = null;
-        String username = null;
-        String password = null;
-
-        Connection conn = null;
-        try {
-            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
-            username = "mhs125314109";
-            password = "mhs125314109";
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection(jdbcURL, username, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Connection conn = DatabaseConnection.getmConnection();
 //            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
         File reportFile = new File(servletConfig.getServletContext()
                 .getRealPath("/resources/report/laporan_pemasukan.jasper"));

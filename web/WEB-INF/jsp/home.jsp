@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>OM-ITEM</title>
+        <title>Sabha IS</title>
         <link rel="shortcut icon" href="img/OM-Item_Logo.png" type="image/png">
         <link href="${pageContext.request.contextPath}/resources/semantic-ui/packaged/css/semantic.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/resources/bxslider/jquery.bxslider.css" rel="stylesheet" type="text/css">
@@ -22,10 +22,10 @@
                 <a class="item" href="member">
                     <i class="user icon"></i> MEMBER AREA
                 </a>
-                
+<!--                
                 <a class="item" href="help">
                     <i class="video icon"></i> HELP
-                </a>
+                </a>-->
                 <div class="right menu">
                     <a class="item" id="loginButton">
                         <i class="sign in icon"></i> LOGIN

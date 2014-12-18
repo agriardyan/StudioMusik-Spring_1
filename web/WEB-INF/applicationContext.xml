@@ -31,14 +31,21 @@
     p:username="${jdbc.username}"
     p:password="${jdbc.password}" /-->
     
-    <bean id="dataSource"
+<!--    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="oracle.jdbc.driver.OracleDriver"
+          p:url="jdbc:oracle:thin:@172.23.9.185:1521:orcl"
+          p:username="mhs125314109"
+          p:password="mhs125314109" />-->
+          
+        <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
           p:driverClassName="oracle.jdbc.driver.OracleDriver"
           p:url="jdbc:oracle:thin:@localhost:1521:xe"
           p:username="mhs125314109"
-          p:password="mhs125314109" />
+          p:password="mhs125314109" />  
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
-    <bean id="cobaController" class="com.rplt.studioMusik.controller.CobaController"/>
+    
 </beans>

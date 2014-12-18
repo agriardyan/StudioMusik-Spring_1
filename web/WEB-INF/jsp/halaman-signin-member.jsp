@@ -22,9 +22,9 @@
                 <a class="item" href="member">
                     <i class="user icon"></i> MEMBER AREA
                 </a>
-                <a class="item" href="help">
+<!--                <a class="item" href="help">
                     <i class="video icon"></i> HELP
-                </a>
+                </a>-->
             </div>
         </div>
         <!--End of Menu bar-->

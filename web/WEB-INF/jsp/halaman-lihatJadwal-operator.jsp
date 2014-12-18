@@ -94,6 +94,7 @@
             $('#reportForm').replaceWith(originalState);
 
             $(document).ready(function() {
+                $(document.getElementById("sche")).addClass("active");
 
                 $('.ui.checkbox')
                         .checkbox({

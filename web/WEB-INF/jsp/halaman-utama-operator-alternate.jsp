@@ -122,6 +122,7 @@
             $('#formCek').replaceWith(originalState);
 
             $(document).ready(function() {
+                $(document.getElementById("op")).addClass("active");
                 $('#popupClockpicker').clockpicker({autoclose: true});
                 $('#popupDatepicker').datepick({dateFormat: 'dd-M-yyyy'});
                 $('.ui.dropdown').dropdown();

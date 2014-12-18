@@ -90,7 +90,7 @@
             $('#reportForm').replaceWith(originalState);
 
             $(document).ready(function() {
-
+                $(document.getElementById("hal")).addClass("active");
                 $('.ui.checkbox')
                         .checkbox({
                             'onChecked': function() {

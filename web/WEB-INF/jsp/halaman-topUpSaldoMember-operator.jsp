@@ -121,6 +121,7 @@
         <script src="<c:out value="${pageContext.request.contextPath}/resources/jclockpicker/jquery-clockpicker.min.js" />" type="text/javascript"></script>
         <script type="text/javascript">
             $(document).ready(function() {
+                $(document.getElementById("topup")).addClass("active");
                 //Hide and Show success message
                 $(document.getElementById("success")).hide();
             <%if (null != request.getParameter("saldo")) {%>

@@ -9,6 +9,7 @@ import com.rplt.studioMusik.dataPersewaan.IPersewaanStudioMusikDAO;
 import com.rplt.studioMusik.dataPersewaan.PersewaanStudioMusik;
 import com.rplt.studioMusik.member.IMemberDAO;
 import com.rplt.studioMusik.member.Member;
+import com.rplt.studioMusik.model.DatabaseConnection;
 import com.rplt.studioMusik.studioMusik.IStudioMusikDAO;
 import com.rplt.studioMusik.studioMusik.StudioMusik;
 import java.io.File;
@@ -97,12 +98,13 @@ public class OperatorController {
     @RequestMapping(value = "/cekJadwal", method = RequestMethod.GET)
     public String cekJadwal(ModelMap model) {
 
-        String tanggalSewa = request.getParameter("tanggalSewa");
+        String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
         String jamSewa = request.getParameter("jamSewa");
         String durasiSewa = request.getParameter("durasiSewa");
         String studio = request.getParameter("studio");
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
+        pw.setmJamMulaiSewa(jamSewa);
         pw.setmMulaiSewa(tanggalSewa);
         pw.setmSelesaiSewa(jamSewa);
         pw.setmDurasi(Integer.parseInt(durasiSewa));
@@ -230,20 +232,7 @@ public class OperatorController {
     
     @RequestMapping(value = "/cetakNota", method = RequestMethod.GET)
     public String cetakNota(HttpServletResponse response) {
-        String jdbcURL = null;
-        String username = null;
-        String password = null;
-
-        Connection conn = null;
-        try {
-            jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
-            username = "mhs125314109";
-            password = "mhs125314109";
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection(jdbcURL, username, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Connection conn = DatabaseConnection.getmConnection();
 //            File reportFile = new File(application.getRealPath("Coba.jasper"));//your report_name.jasper file
         File reportFile = new File(servletConfig.getServletContext()
                 .getRealPath("/resources/report/nota_persewaan.jasper"));
@@ -306,7 +295,7 @@ public class OperatorController {
     @RequestMapping(value = "/cariUser", method = RequestMethod.POST)
     public String cariUser(ModelMap model){
         String username = request.getParameter("user");
-        List<Member> memberList = member.getDataListbyUser("user");
+        List<Member> memberList = member.getDataListbyUser(username);
         model.addAttribute("user", memberList.get(0).getmUsernameMember());
         model.addAttribute("id", memberList.get(0).getmKodeMember());
         model.addAttribute("nama", memberList.get(0).getmNamaMember());
@@ -326,7 +315,7 @@ public class OperatorController {
         String user = request.getParameter("userT");
         int pValue = Integer.parseInt(request.getParameter("saldoT")) + Integer.parseInt(request.getParameter("saldo"));
         member.updateTambahSaldo(user, pValue);
-        List<Member> memberList = member.getDataListbyUser("user");
+        List<Member> memberList = member.getDataListbyUser(user);
         model.addAttribute("user", memberList.get(0).getmUsernameMember());
         model.addAttribute("id", memberList.get(0).getmKodeMember());
         model.addAttribute("nama", memberList.get(0).getmNamaMember());

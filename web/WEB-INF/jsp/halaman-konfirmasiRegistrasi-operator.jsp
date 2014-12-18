@@ -32,7 +32,7 @@
                     <div class="two fields">
                         <div class="field">
                             <br>
-                            <input class="ui blue submit button" value="KEMBALI">
+                            <input type="submit" class="ui blue submit button" value="KEMBALI">
                         </div>
                         <div class="field">
 

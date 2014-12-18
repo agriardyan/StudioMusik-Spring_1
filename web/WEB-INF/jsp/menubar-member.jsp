@@ -15,10 +15,10 @@
     <body>
         <!--Menu bar-->
         <div class="ui menu">
-            <a class="active item" href="halamanutamamember">
+            <a class="item" id="mem" href="halamanutamamember">
                 <i class="book icon"></i> SEWA
             </a>
-            <a class="active item" href="halamanLihatJadwal">
+            <a class="item" id="hal" href="halamanLihatJadwal">
                 <i class="book icon"></i> LIHAT JADWAL
             </a>
 <!--            <div class="ui pointing dropdown link item">
