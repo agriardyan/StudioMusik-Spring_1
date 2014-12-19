@@ -77,45 +77,45 @@
             </div>
         </div>
 
-        <div class="ui one column page grid">
-            <div class="column">
-                <!--Search box-->
-                <!--End of Search box-->
+        <!--Search box-->
+        <!--End of Search box-->
 
-                <div class="two center aligned fields">
-                    <div class="field">
-                        <form class="ui fluid form segment" action="revisi" method="POST" id="penyewaForm" >
-                            <input class="ui blue submit button" type="submit" name="commit" value="REVISI" />
-                            <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
-                            <input type="hidden" name="jamSewa" value="${jamSewa}" />
-                            <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
-                            <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
-                            <input type="hidden" name="studio" value="${studio}" />
-                            <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
-                            <input type="hidden" name="noTelp" value="${noTelp}" />
-                            <input type="hidden" name="biaya" value="${biaya}" />
-                            <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
-                        </form>
-                    </div>
-                    <div class="field">
-                        <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm" >
-                            <input class="ui blue submit button" type="submit" name="commit" value="SIMPAN DATA" />
-                            <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
-                            <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
-                            <input type="hidden" name="jamSewa" value="${jamSewa}" />
-                            <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
-                            <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
-                            <input type="hidden" name="studio" value="${studio}" />
-                            <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
-                            <input type="hidden" name="noTelp" value="${noTelp}" />
-                            <input type="hidden" name="biaya" value="${biaya}" />
-                            <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
-                        </form>
-                    </div>
+        <div class="ui two column page grid">
+            <div class="left floated left aligned column">
+                <div class="field">
+                    <form class="ui fluid form segment" action="revisi" method="POST" id="penyewaForm" >
+                        <input class="ui blue submit button" type="submit" name="commit" value="REVISI" />
+                        <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
+                        <input type="hidden" name="jamSewa" value="${jamSewa}" />
+                        <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
+                        <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
+                        <input type="hidden" name="studio" value="${studio}" />
+                        <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
+                        <input type="hidden" name="noTelp" value="${noTelp}" />
+                        <input type="hidden" name="biaya" value="${biaya}" />
+                        <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
+                    </form>
                 </div>
-
+            </div>
+            <div class="right floated right aligned column">
+                <div class="field">
+                    <form class="ui fluid form segment" action="simpan" method="POST" id="penyewaForm" >
+                        <input class="ui blue submit button" type="submit" name="commit" value="SIMPAN DATA" />
+                        <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
+                        <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
+                        <input type="hidden" name="jamSewa" value="${jamSewa}" />
+                        <input type="hidden" name="durasiSewa" value="${durasiSewa}" />
+                        <input type="hidden" name="jamSelesai" value="${jamSelesai}" />
+                        <input type="hidden" name="studio" value="${studio}" />
+                        <input type="hidden" name="namaPenyewa" value="${namaPenyewa}" />
+                        <input type="hidden" name="noTelp" value="${noTelp}" />
+                        <input type="hidden" name="biaya" value="${biaya}" />
+                        <input type="hidden" name="biayaunfmt" value="${biayaunfmt}" />
+                    </form>
+                </div>
             </div>
         </div>
+
 
         <!--Script-->
         <script src="<c:out value="${pageContext.request.contextPath}/resources/semantic-ui/packaged/javascript/jquery-2.1.1.js" />" type="text/javascript"></script>

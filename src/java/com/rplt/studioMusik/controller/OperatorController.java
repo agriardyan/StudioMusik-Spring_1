@@ -191,11 +191,12 @@ public class OperatorController {
         model.addAttribute("durasiSewa", durasiSewa);
         model.addAttribute("studio", studio);
         model.addAttribute("biaya", biaya);
-        model.addAttribute("ketersediaan", "Studio Tersedia!");
+        model.addAttribute("ketersediaan", 1);
         model.addAttribute("biayaunfmt", biayaunfmt);
         model.addAttribute("disable", "");
         model.addAttribute("namaPenyewa", namaPenyewa);
         model.addAttribute("noTelp", noTelp);
+        model.addAttribute("message", "Studio Tersedia!");
 
         return "halaman-utama-operator-alternate";
     }

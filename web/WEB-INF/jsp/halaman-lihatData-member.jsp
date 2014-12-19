@@ -1,5 +1,5 @@
 <%-- 
-    Document   : halaman-updateMember-member
+    Document   : halaman-lihatData-member
     Created on : Nov 15, 2014, 10:26:46 PM
     Author     : Lorencius
 --%>
@@ -23,7 +23,7 @@
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" method="POST" id="updateForm" action="validateUpdate">
+                <form class="ui fluid form segment" method="POST" id="updateForm" action="halamanutamamember">
                     <div class="two fields">
                         <div class="field">
                             <label>Nama</label>
@@ -31,27 +31,27 @@
                         </div>
                         <div class="field">
                             <label>Tempat Lahir</label>
-                            <input name="tempatLahir" placeholder="Kota kelahiran anda " type="text" value="${tempatLahir}">
+                            <h3>${tempatLahir}</h3>
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
                             <label>Tanggal Lahir</label>
-                            <input name="tanggalLahir" type="text" id="datePicker" placeholder="Tanggal lahir anda" value="${ttl}">
+                            <h3>${ttl}</h3>
                         </div>
                         <div class="field">
                             <label>Alamat</label>
-                            <input name="alamat" placeholder="Alamat domisili anda" type="text" value="${alamat}">
+                            <h3>${alamat}</h3>
                         </div>
                     </div>    
                     <div class="two fields">
                         <div class="field">
                             <label>Telepon</label>
-                            <input name="telepon" placeholder="Telepon anda" type="text" value="${noTelp}">
+                            <h3>${noTelp}</h3>
                         </div>
                         <div class="field">
                             <label>E-mail</label>
-                            <input name="email" placeholder="E-mail anda" type="text" value="${email}">
+                            <h3>${email}</h3>
                         </div>
                     </div>
                     <div class="two fields">
@@ -60,22 +60,11 @@
                             <h3>${username}</h3>
                         </div>
                         <div class="field">
-                            <label>Password Lama</label>
-                            <input name="oldPassword" placeholder="Password saat ini" type="password">
-                        </div>
-                        
-                    </div>
-                    <div class="two fields">
-                        <div class="field">
-                            <label>Password Baru</label>
-                            <input name="password" placeholder="Password baru" type="password">
-                        </div>
-                        <div class="field">
-                            <label>Konfirmasi Password</label>
-                            <input name="cpassword" placeholder="Ketik ulang password baru" type="password">
+                            <label>Saldo</label>
+                            <h3>Rp ${saldoNow}</h3>
                         </div>
                     </div>
-                    <input class="ui blue submit button" name="commit" value="UPDATE MY DATA!">
+                    <input class="ui blue submit button" name="commit" value="KEMBALI">
                 </form>
             </div>
         </div>

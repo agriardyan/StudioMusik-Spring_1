@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface IPegawaiDAO<T> {
 
     public List<T> getDataList();
+    public String getNamaByUser(String pUsername);
     public int validateLogin(String pUsername, String pPassword);
 
 }

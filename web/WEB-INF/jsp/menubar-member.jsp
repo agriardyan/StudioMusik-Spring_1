@@ -25,7 +25,7 @@
                 <i class="user icon"></i> AKUN SAYA <i class="dropdown icon"></i>
                 <div class="menu">
                     <a class="item" href="update"><i class="add icon"></i>Update Data Akun</a>
-                    <a class="item" href="update"><i class="bullseye icon"></i>Lihat Data Akun</a>
+                    <a class="item" href="lihatData"><i class="bullseye icon"></i>Lihat Data Akun</a>
                 </div>
             </div>
             <div class="right menu">

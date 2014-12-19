@@ -47,16 +47,17 @@ public class LoginController {
                         return "index";
                     case 1:
                         //wrong password
+                        model.addAttribute("tempName", username);
                         model.addAttribute("message", "Wrong password!");
                         return "index";
                     case 2:
                         session.setAttribute("role", "OPERATOR");
-                        session.setAttribute("name", username);
+                        session.setAttribute("name", pegawai.getNamaByUser(username));
                         session.setAttribute("username", username);
                         return "redirect:/operator/halamanutamaoperator";
                     case 3:
                         session.setAttribute("role", "OWNER");
-                        session.setAttribute("name", username);
+                        session.setAttribute("name", pegawai.getNamaByUser(username));
                         session.setAttribute("username", username);
                         return "redirect:/owner/halamanutamaowner";
                     default:

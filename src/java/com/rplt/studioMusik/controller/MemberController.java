@@ -126,10 +126,10 @@ public class MemberController {
             saldoFmt = saldoFmt.replace(".", "&");
             saldoFmt = saldoFmt.replace(",", ".");
             saldoFmt = saldoFmt.replace("&", ",");
-            
+
             int sisaSaldo = member.simulateKurangSaldo(session.getAttribute("username").toString(), biayaUnfmt);
-            
-            if(sisaSaldo<0) {
+
+            if (sisaSaldo < 0) {
                 model.addAttribute("ketersediaan", -1);
                 model.addAttribute("biaya", biaya);
                 model.addAttribute("message", "Saldo anda tidak mencukupi! Silakan top up saldo.");
@@ -137,7 +137,7 @@ public class MemberController {
                 model.addAttribute("disable", "disabled");
                 return "halaman-utama-member";
             }
-            
+
             model.replace("disable", "disabled", "");
             model.addAttribute("tanggalSewa", tanggalSewa);
             model.addAttribute("jamSewa", jamSewa);
@@ -234,11 +234,12 @@ public class MemberController {
         model.addAttribute("durasiSewa", durasiSewa);
         model.addAttribute("studio", studio);
         model.addAttribute("biaya", biaya);
-        model.addAttribute("ketersediaan", "Studio Tersedia!");
+        model.addAttribute("ketersediaan", 1);
         model.addAttribute("biayaunfmt", biayaunfmt);
         model.addAttribute("disable", "disabled");
         model.addAttribute("namaPenyewa", namaPenyewa);
         model.addAttribute("noTelp", noTelp);
+        model.addAttribute("message", "Studio Tersedia!");
 
         return "halaman-utama-member";
     }
@@ -369,6 +370,34 @@ public class MemberController {
 //        model.addAttribute("noTelp", telepon);
 //        model.addAttribute("email", email);
         return "halaman-suksesUpdate-member";
+    }
+
+    @RequestMapping(value = "/lihatData", method = RequestMethod.GET)
+    public String lihatData(ModelMap model) {
+        List<Member> dataListbyUser = member.getDataListbyUser(session.getAttribute("username").toString());
+        String ttl = dataListbyUser.get(0).getmTempatTanggalLahir();
+        String tempatLahir = dataListbyUser.get(0).getmTempatLahirMember();
+        String alamat = dataListbyUser.get(0).getmTempatLahirMember();
+        String telepon = dataListbyUser.get(0).getmNomorTelepon();
+        String email = dataListbyUser.get(0).getmEmailMember();
+
+        DecimalFormat df = new DecimalFormat("###,###.00");
+
+        String saldo = member.getSaldo(session.getAttribute("username").toString());
+
+        String saldoFmt = df.format(Integer.parseInt(saldo));
+
+        saldoFmt = saldoFmt.replace(".", "&");
+        saldoFmt = saldoFmt.replace(",", ".");
+        saldoFmt = saldoFmt.replace("&", ",");
+
+        model.addAttribute("ttl", ttl);
+        model.addAttribute("tempatLahir", tempatLahir);
+        model.addAttribute("alamat", alamat);
+        model.addAttribute("noTelp", telepon);
+        model.addAttribute("email", email);
+        model.addAttribute("saldoNow", saldoFmt);
+        return "halaman-lihatData-member";
     }
 
     @RequestMapping(value = "/topup", method = RequestMethod.GET)

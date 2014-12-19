@@ -28,6 +28,13 @@ public class PegawaiDAO implements IPegawaiDAO<Pegawai> {
     
     @Autowired
     private DataSource dataSource;
+
+    @Override
+    public String getNamaByUser(String pUsername) {
+        String sql = "SELECT nama_pegawai FROM pegawai_studio_musik WHERE username_pegawai = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.queryForObject(sql, String.class, pUsername);
+    }
     
     /**
      * 1 : OPERATOR 2 : ADMIN
