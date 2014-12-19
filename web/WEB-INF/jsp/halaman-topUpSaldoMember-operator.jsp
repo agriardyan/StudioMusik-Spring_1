@@ -21,6 +21,16 @@
 
         <div class="ui one column page grid">
             <div class="column">
+                <c:if test="${!empty message}">
+                    <div class="field">
+                        <div class="ui error form segment">
+                            <div class="ui error message">
+                                <div class="header">Gagal Update</div>
+                                <p>${message}</p>
+                            </div>      
+                        </div>
+                    </div>
+                </c:if>
                 <!--Search box Form-->
                 <form class="ui fluid form segment" action="cariUser" method="POST" id="updateSaldo">
                     <div class="three fields">
