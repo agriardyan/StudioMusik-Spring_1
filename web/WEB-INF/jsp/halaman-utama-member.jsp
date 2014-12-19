@@ -88,11 +88,13 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Nama Penyewa</label>
-                            <input type="text" name="namaPenyewa" placeholder="Nama Penyewa" value="${namaPenyewa}" ${disable}  />
+                            <h3>${name}</h3>
+                            <input type="hidden" name="namaPenyewa" placeholder="Nama Penyewa" value="${name}" />
                         </div>
                         <div class="field">
                             <label>Nomor Telepon</label>
-                            <input type="text" name="noTelp" placeholder="Nomor Telepon Penyewa" value="${noTelp}" ${disable} />
+                            <h3>${noTelp}</h3>
+                            <input type="hidden" name="noTelp" placeholder="Nomor Telepon Penyewa" value="${noTelp}" />
                         </div>
                     </div>
                     <input type="hidden" name="tanggalSewa" value="${tanggalSewa}" />
@@ -103,7 +105,7 @@
                     <input type="hidden" name="biaya" value="${biaya}" />
                     <div class="fields">
                         <div class="field">
-                            <input class="ui blue submit button" type="submit" name="commit" value="SUBMIT" />
+                            <input class="ui blue submit button" type="submit" name="commit" value="SUBMIT" ${disable} />
                             <!--<input type="submit">-->
                         </div>
                     </div>

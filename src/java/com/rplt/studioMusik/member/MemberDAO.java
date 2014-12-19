@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.rplt.studioMusik.member;
 
 import java.sql.ResultSet;
@@ -24,18 +23,17 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MemberDAO implements IMemberDAO<Member> {
-    
+
     @Autowired
     private DataSource dataSource;
-    
-    
+
     @Override
     public void simpanData(Member pT) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String kode = getGeneratedKodeMember();
         String sql = "INSERT INTO member_studio_musik VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        jdbcTemplate.update(sql, 
+
+        jdbcTemplate.update(sql,
                 new Object[]{
                     kode,
                     pT.getmUsernameMember(),
@@ -45,10 +43,10 @@ public class MemberDAO implements IMemberDAO<Member> {
                     pT.getmAlamatMember(),
                     pT.getmEmailMember(),
                     pT.getmNomorTelepon(),
-                    pT.getmSaldoMember()
-                    
-        });
-        
+                    pT.getmSaldoMember(),
+                    pT.getmTempatLahirMember()
+                });
+
         pT.setmKodeMember(kode);
     }
 
@@ -70,7 +68,7 @@ public class MemberDAO implements IMemberDAO<Member> {
         String sql = "SELECT * FROM member_studio_musik WHERE username_member = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        memberList = jdbcTemplate.query(sql, new Object[] {pUsername.toUpperCase()}, new MemberRowMapper());
+        memberList = jdbcTemplate.query(sql, new Object[]{pUsername.toUpperCase()}, new MemberRowMapper());
 
         if (!memberList.isEmpty()) {
             String username = memberList.get(0).getmUsernameMember();
@@ -85,7 +83,7 @@ public class MemberDAO implements IMemberDAO<Member> {
             System.out.println("UNREGISTERED USERNAME");
             return 0;
         }
-        
+
     }
 
     @Override
@@ -98,7 +96,7 @@ public class MemberDAO implements IMemberDAO<Member> {
         saldo = jdbcTemplate.queryForObject(sql, new Object[]{pUsername}, String.class);
         return saldo;
     }
-    
+
     @Override
     public int simulateKurangSaldo(String pUsername, int pValue) {
         String sql = "SELECT saldo_member FROM MEMBER_STUDIO_MUSIK WHERE username_member = ?";
@@ -112,14 +110,14 @@ public class MemberDAO implements IMemberDAO<Member> {
         String sql = "UPDATE member_studio_musik SET saldo_member = ? WHERE username_member = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update(sql, new Object[]{pValue,pUsername});
+        jdbcTemplate.update(sql, new Object[]{pValue, pUsername});
     }
 
     @Override
     public void updateKurangSaldo(String pUsername, int pValue) {
         String sql = "UPDATE member_studio_musik SET saldo_member = ? WHERE username_member = ?";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.update(sql, 
+        jdbcTemplate.update(sql,
                 new Object[]{
                     pValue,
                     pUsername
@@ -143,13 +141,52 @@ public class MemberDAO implements IMemberDAO<Member> {
     public List<Member> getDataListbyUser(String pUsername) {
         List<Member> memberList = new ArrayList<Member>();
 
-        String sql = "SELECT * FROM member_studio_musik WHERE username_member = ?";
+        String sql = "SELECT kode_member, username_member, password_member, nama_member, to_char(ttl_member, 'dd-MON-yyyy'), alamat_member, email_member, no_telp_member, saldo_member, tempat_lahir_member FROM member_studio_musik WHERE username_member = ?";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        memberList = jdbcTemplate.query(sql, new Object[] {pUsername.toUpperCase()}, new MemberRowMapper());
+        memberList = jdbcTemplate.query(sql, new Object[]{pUsername.toUpperCase()}, new MemberRowMapper());
         return memberList;
     }
-    
+
+    @Override
+    public String getNamaByUser(String pUsername) {
+        String sql = "SELECT nama_member FROM member_studio_musik WHERE username_member = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.queryForObject(sql, String.class, pUsername.toUpperCase());
+
+    }
+
+    @Override
+    public String getNoTelpByUser(String pUsername) {
+        String sql = "SELECT no_telp_member FROM member_studio_musik WHERE username_member = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate.queryForObject(sql, String.class, pUsername.toUpperCase());
+    }
+
+    @Override
+    public void updateDataMember(Member pT) {
+        String sql = "UPDATE member_studio_musik SET "
+                + "ttl_member = to_date(?, 'dd-MON-yyyy'), "
+                + "tempat_lahir_member = ?, "
+                + "alamat_member = ?, "
+                + "no_telp_member = ?, "
+                + "email_member = ?, "
+                + "password_member = ? "
+                + "WHERE username_member = ?";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(sql,
+                new Object[]{
+                    pT.getmTempatTanggalLahir(),
+                    pT.getmTempatLahirMember(),
+                    pT.getmAlamatMember(),
+                    pT.getmNomorTelepon(),
+                    pT.getmEmailMember(),
+                    pT.getmPaswordMember(),
+                    pT.getmUsernameMember()
+                });
+    }
+
     public static class MemberRowMapper implements RowMapper<Member> {
 
         @Override
@@ -157,7 +194,6 @@ public class MemberDAO implements IMemberDAO<Member> {
             MemberExtractor memberExtractor = new MemberExtractor();
             return memberExtractor.extractData(rs);
         }
-
 
     }
 
@@ -176,12 +212,11 @@ public class MemberDAO implements IMemberDAO<Member> {
             member.setmEmailMember(rs.getString(7));
             member.setmNomorTelepon(rs.getString(8));
             member.setmSaldoMember(rs.getInt(9));
+            member.setmTempatLahirMember(rs.getString(10));
 
             return member;
         }
 
     }
 
-    
-    
 }

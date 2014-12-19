@@ -16,90 +16,63 @@
     </head>
     <body>
         <!--Menu bar-->
-        <div class="ui menu">
-                <a class="active item" href="booking">
-                    <i class="book icon"></i> SEWA
-                </a>
-                <div class="ui pointing dropdown link item">
-                    <i class="user icon"></i> MEMBER <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="update"><i class="add icon"></i>Update My Data</a>
-                    </div>
-                </div>
-                <div class="right menu">
-                    <form method="POST">
-                        <div class="ui dropdown link item">
-                            <i class="user icon"></i> MEMBER <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <table class="ui basic table">
-                                    <tr>
-                                        <td>Nama</td>
-                                        <td>${name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td >ID</td>
-                                        <td>${username}</td>
-                                    </tr>
-                                </table>
-                                <input class="ui fluid tiny submit button" type="submit" name="logoutAd" value="Logout">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <%@include file="menubar-member.jsp" %>
         <!--End of Menu bar-->
 
         <div class="ui one column page grid">
             <div class="column">
                 <!--Search box-->
                 <!--End of Search box-->
-                <form class="ui fluid form segment" method="POST" id="updateForm">
+                <form class="ui fluid form segment" method="POST" id="updateForm" action="validateUpdate">
                     <div class="two fields">
                         <div class="field">
                             <label>Nama</label>
-                            <input name="nama" placeholder="Nama" type="text">
+                            <h3>${name}</h3>
                         </div>
                         <div class="field">
                             <label>Tempat Lahir</label>
-                            <input name="tempatLahir" placeholder="Tempat Lahir" type="text">
+                            <input name="tempatLahir" placeholder="Kota kelahiran anda " type="text" value="${tempatLahir}">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
                             <label>Tanggal Lahir</label>
-                            <input name="tanggalLahir" type="text" id="datePicker" placeholder="Tanggal Lahir">
+                            <input name="tanggalLahir" type="text" id="datePicker" placeholder="Tanggal lahir anda" value="${ttl}">
                         </div>
                         <div class="field">
                             <label>Alamat</label>
-                            <input name="alamat" placeholder="Alamat" type="text">
+                            <input name="alamat" placeholder="Alamat domisili anda" type="text" value="${alamat}">
                         </div>
                     </div>    
                     <div class="two fields">
                         <div class="field">
                             <label>Telepon</label>
-                            <input name="telepon" placeholder="Telepon" type="text">
+                            <input name="telepon" placeholder="Telepon anda" type="text" value="${noTelp}">
                         </div>
                         <div class="field">
                             <label>E-mail</label>
-                            <input name="email" placeholder="E-mail" type="text">
+                            <input name="email" placeholder="E-mail anda" type="text" value="${email}">
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
                             <label>Username</label>
-                            <input name="username" placeholder="Username" disabled="disabled" type="text">
+                            <h3>${username}</h3>
                         </div>
                         <div class="field">
-                            <label>Password</label>
-                            <input name="password" placeholder="Password" type="password">
+                            <label>Password Lama</label>
+                            <input name="oldPassword" placeholder="Password saat ini" type="password">
                         </div>
+                        
                     </div>
                     <div class="two fields">
                         <div class="field">
+                            <label>Password Baru</label>
+                            <input name="password" placeholder="Password baru" type="password">
                         </div>
                         <div class="field">
-                            <label>Confirm Password</label>
-                            <input name="cpassword" placeholder="Password" type="password">
+                            <label>Konfirmasi Password</label>
+                            <input name="cpassword" placeholder="Ketik ulang password baru" type="password">
                         </div>
                     </div>
                     <input class="ui blue submit button" name="commit" value="UPDATE MY DATA!">
@@ -120,7 +93,7 @@
 
                 //Update Form error prompt
                 $("#updateForm").form({
-                    idfilm: {
+                    nama: {
                         identifier: 'nama',
                         rules: [
                             {
@@ -129,7 +102,7 @@
                             }
                         ]
                     },
-                    judul: {
+                    tempatLahir: {
                         identifier: 'tempatLahir',
                         rules: [
                             {
@@ -138,7 +111,7 @@
                             }
                         ]
                     },
-                    genre: {
+                    tanggalLahir: {
                         identifier: 'tanggalLahir',
                         rules: [
                             {
@@ -146,7 +119,7 @@
                                 prompt: 'Masukkan Tanggal Lahir'
                             }]
                     },
-                    status: {
+                    alamat: {
                         identifier: 'alamat',
                         rules: [
                             {
@@ -155,7 +128,7 @@
                             }
                         ]
                     },
-                    kategori: {
+                    telepon: {
                         identifier: 'telepon',
                         rules: [
                             {
@@ -188,10 +161,11 @@
                         identifier: 'cpassword',
                         rules: [
                             {
-                                type: 'match',
+                                type: 'match[password]',
                                 prompt: 'Password yang Anda masukkan tidak sesuai'
                             }]
                     }
+
                 },
                 {
                     on: 'submit',

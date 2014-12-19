@@ -39,7 +39,7 @@
                                     <td>${name}</td>
                                 </tr>
                                 <tr>
-                                    <td >ID</td>
+                                    <td >Username</td>
                                     <td>${username}</td>
                                 </tr>
                             </table>

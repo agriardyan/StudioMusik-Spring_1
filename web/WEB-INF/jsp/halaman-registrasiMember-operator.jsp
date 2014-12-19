@@ -39,7 +39,8 @@
                         <div class="field">
                             <label>Tempat Lahir</label>
                             <input name="tempatLahir" placeholder="Tempat Lahir" type="text">
-                        </div><div class="field">
+                        </div>
+                        <div class="field">
                             <label>Tanggal Lahir</label>
                             <input name="tanggalLahir" type="text" id="datePicker" placeholder="Tanggal Lahir">
                         </div>
@@ -67,7 +68,8 @@
                     <div class="two fields">
                         <div class="field">
                             <label>Saldo Awal</label>
-                            <input name="saldoAwal" placeholder="Rp 200.000,00" type="text" disabled="">
+                            <h3>Rp 200.000,00</h3>
+                            <input name="saldoAwal" placeholder="Rp 200.000,00" type="hidden" disabled="">
                             <input name="saldo" value="200000" type="hidden">
                         </div>
                         <div class="field">

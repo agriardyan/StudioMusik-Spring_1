@@ -73,7 +73,7 @@
                                 <div class="header">
                                     Proses Penambahan Saldo Berhasil
                                 </div>
-                                <p>Nominal Saldo <b>Rp. <%=request.getParameter("saldo")%></b> berhasil ditambahkan pada account Anda.</p>
+                                <p>Nominal Saldo <b>Rp. ${saldo}</b> berhasil ditambahkan pada account Anda.</p>
                             </div>
                             <!--End of Success Message-->
                         </div>

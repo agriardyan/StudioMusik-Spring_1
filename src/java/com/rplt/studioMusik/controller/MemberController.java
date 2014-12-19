@@ -76,21 +76,21 @@ public class MemberController {
         model.addAttribute("disable", "disabled");
         return "halaman-utama-member";
     }
-    
+
     @RequestMapping(value = "/halamanLihatJadwal", method = {RequestMethod.GET})
     public String halamanLihatJadwal(ModelMap model) {
         return "halaman-lihatJadwal-member";
     }
-    
+
     @RequestMapping(value = "/lihatJadwal", method = {RequestMethod.GET})
     public String lihatJadwal(ModelMap model) {
         String tanggalSewa = request.getParameter("tanggalSewa").toUpperCase();
-        
+
         List<PersewaanStudioMusik> dataListByDate = persewaanStudioMusik.getDataListByMonth(tanggalSewa);
-        
+
         model.addAttribute("tanggalSewa", tanggalSewa);
         model.addAttribute("dataListByDate", dataListByDate);
-        
+
         return "halaman-lihatJadwal-member";
     }
 
@@ -212,7 +212,7 @@ public class MemberController {
         model.addAttribute("biaya", biaya);
         model.addAttribute("ketersediaan", "Studio Tersedia!");
         model.addAttribute("biayaunfmt", biayaunfmt);
-        model.addAttribute("disable", "");
+        model.addAttribute("disable", "disabled");
         model.addAttribute("namaPenyewa", namaPenyewa);
         model.addAttribute("noTelp", noTelp);
 
@@ -231,14 +231,14 @@ public class MemberController {
         String biaya = request.getParameter("biaya");
         String biayaunfmt = request.getParameter("biayaunfmt");
         String saldo = request.getParameter("sisaSaldo");
-        
-        System.err.println("JAM SEWA : "+jamSewa);
-        System.err.println("JAM SELESAI : "+jamSelesai);
+
+        System.err.println("JAM SEWA : " + jamSewa);
+        System.err.println("JAM SELESAI : " + jamSelesai);
 
         PersewaanStudioMusik pw = new PersewaanStudioMusik();
         pw.setmMulaiSewa(tanggalSewa + " " + jamSewa);
         pw.setmSelesaiSewa(tanggalSewa + " " + jamSelesai);
-        System.err.println("MULAI SEWA : "+pw.getmMulaiSewa());
+        System.err.println("MULAI SEWA : " + pw.getmMulaiSewa());
         pw.setmDurasi(Integer.parseInt(durasiSewa));
         pw.setmKodeStudio(studio);
         pw.setmNamaPenyewa(namaPenyewa);
@@ -252,7 +252,7 @@ public class MemberController {
 
         return "halaman-cetakNota-member";
     }
-    
+
     @RequestMapping(value = "/cetakNota", method = RequestMethod.GET)
     public String cetakNota(HttpServletResponse response) {
         Connection conn = DatabaseConnection.getmConnection();
@@ -285,8 +285,66 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String registrasiMember() {
-        return "under-construction";
+    public String updateMember(ModelMap model) {
+        System.out.println("ENTERING UPDATE");
+        List<Member> dataListbyUser = member.getDataListbyUser(session.getAttribute("username").toString());
+        String ttl = dataListbyUser.get(0).getmTempatTanggalLahir();
+        String tempatLahir = dataListbyUser.get(0).getmTempatLahirMember();
+        String alamat = dataListbyUser.get(0).getmTempatLahirMember();
+        String telepon = dataListbyUser.get(0).getmNomorTelepon();
+        String email = dataListbyUser.get(0).getmEmailMember();
+
+        model.addAttribute("ttl", ttl);
+        model.addAttribute("tempatLahir", tempatLahir);
+        model.addAttribute("alamat", alamat);
+        model.addAttribute("noTelp", telepon);
+        model.addAttribute("email", email);
+        return "halaman-updateMember-member";
+    }
+
+    @RequestMapping(value = "/validateUpdate", method = RequestMethod.POST)
+    public String validateUpdateMember(ModelMap model) {
+        List<Member> dataListbyUser = member.getDataListbyUser(session.getAttribute("username").toString());
+        String nama = session.getAttribute("name").toString();
+        String username = session.getAttribute("username").toString();
+        String ttl = request.getParameter("tanggalLahir").toUpperCase();
+        String tempatLahir = request.getParameter("tempatLahir");;
+        String alamat = request.getParameter("alamat");
+        String telepon = request.getParameter("telepon");
+        String email = request.getParameter("email");
+        String oldPassword = request.getParameter("oldPassword");
+        System.out.println("ENTERING VALIDATE UPDATE");
+
+        if (!dataListbyUser.get(0).getmPaswordMember().equals(oldPassword)) {
+            System.out.println("ENTERING PASSWORD NOT MATCH");
+            model.addAttribute("ttl", ttl);
+            model.addAttribute("tempatLahir", tempatLahir);
+            model.addAttribute("alamat", alamat);
+            model.addAttribute("noTelp", telepon);
+            model.addAttribute("email", email);
+            model.addAttribute("error", "Password salah!");
+            return "halaman-updateMember-member";
+        }
+        
+        String newPassword = request.getParameter("password");
+        
+        Member m = new Member();
+        m.setmTempatTanggalLahir(ttl);
+        m.setmTempatLahirMember(tempatLahir);
+        m.setmAlamatMember(alamat);
+        m.setmNomorTelepon(telepon);
+        m.setmEmailMember(email);
+        m.setmPaswordMember(newPassword);
+        m.setmUsernameMember(username);
+        
+        member.updateDataMember(m);
+
+//        model.addAttribute("ttl", ttl);
+//        model.addAttribute("tempatLahir", tempatLahir);
+//        model.addAttribute("alamat", alamat);
+//        model.addAttribute("noTelp", telepon);
+//        model.addAttribute("email", email);
+        return "halaman-suksesUpdate-member";
     }
 
     @RequestMapping(value = "/topup", method = RequestMethod.GET)

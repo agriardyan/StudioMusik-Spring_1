@@ -20,6 +20,7 @@ public class Member {
     private String mAlamatMember;
     private String mEmailMember;
     private String mNomorTelepon;
+    private String mTempatLahirMember;
     private int mSaldoMember;
 
     public Member() {
@@ -95,6 +96,14 @@ public class Member {
 
     public void setmSaldoMember(int mSaldoMember) {
         this.mSaldoMember = mSaldoMember;
+    }
+
+    public String getmTempatLahirMember() {
+        return mTempatLahirMember;
+    }
+
+    public void setmTempatLahirMember(String mTempatLahirMember) {
+        this.mTempatLahirMember = mTempatLahirMember;
     }
 
     @Override
