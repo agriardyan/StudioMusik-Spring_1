@@ -124,11 +124,13 @@ public class OperatorController {
             model.addAttribute("durasiSewa", durasiSewa);
             model.addAttribute("studio", studio);
             model.addAttribute("biaya", biaya);
-            model.addAttribute("ketersediaan", "Studio Tersedia!");
+            model.addAttribute("ketersediaan", 1);
             model.addAttribute("biayaunfmt", biayaUnfmt);
+            model.addAttribute("message", "Studio Tersedia!");
             model.addAttribute("disable", "");
         } else {
-            model.addAttribute("ketersediaan", "Studio tidak tersedia pada waktu tersebut!");
+            model.addAttribute("ketersediaan", 0);
+            model.addAttribute("message", "Studio tidak tersedia pada waktu tersebut!");
             model.addAttribute("disable", "disabled");
         }
 

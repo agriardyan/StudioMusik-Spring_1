@@ -26,6 +26,7 @@ public class LogoutController {
     public String logout() {
         session.removeAttribute("username");
         session.removeAttribute("password");
+        session.removeAttribute("noTelp");
         
         session.invalidate();
         return "redirect:/home/welcome";

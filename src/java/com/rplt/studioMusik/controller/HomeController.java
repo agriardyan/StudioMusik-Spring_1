@@ -37,7 +37,7 @@ public class HomeController {
     
     @RequestMapping(value = "/help")
     public String help() {
-        return "under-construction";
+        return "halaman-help-home";
     }
     
     @RequestMapping(value = "loginmember", method = {RequestMethod.GET, RequestMethod.POST})

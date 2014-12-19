@@ -13,61 +13,14 @@
         <link href="${pageContext.request.contextPath}/resources/bxslider/jquery.bxslider.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <!--Menu bar-->
-        <div class="ui blue inverted main menu">
-            <div class="container">
-                <a class="active item" href="welcome">
-                    <i class="home icon"></i> HOME
-                </a>
-                <a class="item" href="member">
-                    <i class="user icon"></i> MEMBER AREA
-                </a>
-<!--                
-                <a class="item" href="help">
-                    <i class="video icon"></i> HELP
-                </a>-->
-                <div class="right menu">
-                    <a class="item" id="loginButton">
-                        <i class="sign in icon"></i> LOGIN
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!--End of Menu bar-->
-
-        <!--Login Sidebar-->
-        <div class="ui black small vertical right sidebar menu" id="loginSidebar">
-            <div class="item">
-                <form class="ui form basic segment" method="POST" id="sideLogin" action="login">
-                    <div class="field">
-                        <div class="ui blue ribbon label">Username</div>
-                        <div class="ui left labeled icon input">
-                            <input name="username" id="user" type="text" placeholder="Username">
-                            <i class="user icon"></i>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui blue ribbon label">Password</div>
-                        <div class="ui left labeled icon input">
-                            <input name="password" id="pass" type="password" placeholder="Password">
-                            <i class="lock icon"></i>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <input class="ui button" type="submit" name="commit" value="SIGN IN">
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!--End of Login Sidebar-->
-
+        <%@include file="menubar-home.jsp" %>
         <!--Main body-->
         <div class="main container">
             <div class="ui grid" style="position: absolute;">
                 <div class="row">
                     <div class="three wide column">
-                        <h4 class="ui top attached inverted blue block header">
-                            BENEFIT
+                        <h4 class="ui top attached center aligned inverted blue block header">
+                            KEUNTUNGAN MEMBER
                         </h4>
                         <div class="ui segment attached">
                             <img src="${pageContext.request.contextPath}/resources/img/OMitem_Benefit.png" style="width: 90%">
@@ -75,7 +28,7 @@
                     </div>
                     <div class="ten wide column">
                         <h4 class="ui top center aligned attached inverted blue block header">
-                            LATEST NEWS
+                            WARTA TERBARU
                         </h4>
                         <div class="ui segment attached">
                             <ul id="slider1">
@@ -86,7 +39,7 @@
                             </ul>
                         </div>
                         <h4 class="ui top center aligned attached inverted blue block header">
-                            UPCOMING EVENT
+                            EVENT YANG AKAN DATANG
                         </h4>
                         <div class="ui segment attached">
                             <ul id="slider2">
@@ -132,36 +85,6 @@
                     moveSlides: 1
                 });
 
-                //Login button handler
-                $("#loginButton").click(function() {
-                    $("#loginSidebar")
-                            .sidebar('toggle');
-                });
-
-                //Login sidebar error prompt
-                $("#sideLogin").form({
-                    username: {
-                        identifier: 'user',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a username'
-                            }
-                        ]
-                    },
-                    password: {
-                        identifier: 'pass',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a password'
-                            }
-                        ]
-                    }
-                }, {
-                    on: 'blur',
-                    inline: 'true'
-                });
             });
         </script>
     </body>

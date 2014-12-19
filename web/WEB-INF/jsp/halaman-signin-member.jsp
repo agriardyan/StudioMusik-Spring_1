@@ -14,38 +14,37 @@
     </head>
     <body>
         <!--Menu bar-->
-        <div class="container">
-            <div class="ui blue inverted menu">
-                <a class="item" href="welcome">
-                    <i class="home icon"></i> HOME
-                </a>
-                <a class="item" href="member">
-                    <i class="user icon"></i> MEMBER AREA
-                </a>
-<!--                <a class="item" href="help">
-                    <i class="video icon"></i> HELP
-                </a>-->
-            </div>
-        </div>
+        <%@include file="menubar-home.jsp" %>
         <!--End of Menu bar-->
 
         <!--Main body-->
         <div class="main container">
             <div class="ui error message">
                 <div class="header">
-                    You have to sign in
+                    Sign in terlebih dahulu
                 </div>
-                <p>Fill the form with your User ID and Password if you are already a member of our M-TIX program
-                    then do sign in by clicking the Sign in button. <br> If you are facing a problem please contact 
-                    our Administrator.
+                <p>Isi form dengan User ID dan Password anda jika anda sudah terdaftar sebagai member studio musik Sabha
+                    kemudian tekan tombol Sign In. <br>
+                    Untuk informasi lebih lanjut, Anda dapat menghubungi customer service kami, terimakasih.
                 </p>
             </div>
-            <div class="ui grid">
-                <div class="four wide column">
+            <div class="ui three column page grid">
+                <div class="column"></div>
+                <div class="column">
                     <h4 class="ui top center aligned attached inverted blue block header">
                         SIGN IN
                     </h4>
                     <form class="ui form segment attached" id="mtixSignin" action="loginmember" method="POST">
+                        <c:if test="${!empty message}">
+                            <div class="field">
+                                <div class="ui error form segment">
+                                    <div class="ui error message">
+                                        <div class="header">Gagal Signin</div>
+                                        <p>${message}</p>
+                                    </div>      
+                                </div>
+                            </div>
+                        </c:if>
                         <div class="field">
                             <div class="ui blue ribbon label">Username</div>
                             <div class="ui left labeled icon input">
@@ -60,12 +59,12 @@
                                 <i class="lock icon"></i>
                             </div>
                         </div>
-                        <div class="field">${message}</div>
                         <div class="field">
                             <input class="ui tiny blue submit button" type="submit" name="commit" value="Sign in">
                         </div>
                     </form>
                 </div>
+                <div class="column"></div>
             </div>
         </div>
         <!--End of Main body-->

@@ -67,6 +67,7 @@ public class MemberController {
     public String logout() {
         session.removeAttribute("username");
         session.removeAttribute("password");
+        session.removeAttribute("noTelp");
         session.invalidate();
         return "redirect:/home/welcome";
     }
@@ -117,17 +118,40 @@ public class MemberController {
             biaya = biaya.replace(".", "&");
             biaya = biaya.replace(",", ".");
             biaya = biaya.replace("&", ",");
+
+            String saldo = member.getSaldo(session.getAttribute("username").toString());
+
+            String saldoFmt = df.format(Integer.parseInt(saldo));
+
+            saldoFmt = saldoFmt.replace(".", "&");
+            saldoFmt = saldoFmt.replace(",", ".");
+            saldoFmt = saldoFmt.replace("&", ",");
+            
+            int sisaSaldo = member.simulateKurangSaldo(session.getAttribute("username").toString(), biayaUnfmt);
+            
+            if(sisaSaldo<0) {
+                model.addAttribute("ketersediaan", -1);
+                model.addAttribute("biaya", biaya);
+                model.addAttribute("message", "Saldo anda tidak mencukupi! Silakan top up saldo.");
+                model.addAttribute("saldoNow", saldoFmt);
+                model.addAttribute("disable", "disabled");
+                return "halaman-utama-member";
+            }
+            
             model.replace("disable", "disabled", "");
             model.addAttribute("tanggalSewa", tanggalSewa);
             model.addAttribute("jamSewa", jamSewa);
             model.addAttribute("durasiSewa", durasiSewa);
             model.addAttribute("studio", studio);
             model.addAttribute("biaya", biaya);
-            model.addAttribute("ketersediaan", "Studio Tersedia!");
+            model.addAttribute("ketersediaan", 1);
+            model.addAttribute("message", "Studio Tersedia!");
             model.addAttribute("biayaunfmt", biayaUnfmt);
             model.addAttribute("disable", "");
+            model.addAttribute("saldoNow", saldoFmt);
         } else {
-            model.addAttribute("ketersediaan", "Studio tidak tersedia pada waktu tersebut!");
+            model.addAttribute("ketersediaan", 0);
+            model.addAttribute("message", "Studio tidak tersedia pada waktu tersebut!");
             model.addAttribute("disable", "disabled");
         }
 
@@ -325,9 +349,9 @@ public class MemberController {
             model.addAttribute("error", "Password salah!");
             return "halaman-updateMember-member";
         }
-        
+
         String newPassword = request.getParameter("password");
-        
+
         Member m = new Member();
         m.setmTempatTanggalLahir(ttl);
         m.setmTempatLahirMember(tempatLahir);
@@ -336,7 +360,7 @@ public class MemberController {
         m.setmEmailMember(email);
         m.setmPaswordMember(newPassword);
         m.setmUsernameMember(username);
-        
+
         member.updateDataMember(m);
 
 //        model.addAttribute("ttl", ttl);

@@ -70,9 +70,30 @@
                             <input class="ui blue submit button" type="submit" name="commit" value="CEK KETERSEDIAAN!">
                         </div>
                         <div class="field">
-                            <!--DISINI UNTUK INFORMASI BIAYA--> 
-                            <h4 style="color: red">${ketersediaan}</h4>
-                            <h4 style="color: red">Biaya sewa sebesar Rp ${biaya}</h4>
+                            <div class="field">
+                                <!--Success Message-->
+                                <c:if test="${ketersediaan == 1}">
+                                    <c:set var="boxcolor" value="positive"></c:set>
+                                </c:if>
+                                <c:if test="${ketersediaan < 1}">
+                                    <c:set var="boxcolor" value="negative"></c:set>
+                                </c:if>
+                                <div class="ui ${boxcolor} message" id="success">
+                                    <div class="header">
+                                        ${message}
+                                    </div>
+                                    <c:if test="${ketersediaan == -1}">
+                                        <p>Biaya sewa sebesar <b>Rp ${biaya}</b></p>
+                                        <p>Saldo anda saat ini <b>Rp ${saldoNow}</b></p>
+                                    </c:if>
+                                    <c:if test="${ketersediaan == 1}">
+                                        <p>Biaya sewa sebesar <b>Rp ${biaya}</b></p>
+                                        <p>Saldo anda saat ini <b>Rp ${saldoNow}</b></p>
+                                    </c:if>
+                                </div>
+                                <!--End of Success Message-->
+                            </div>
+
                         </div>
                     </div>
                 </form>
@@ -175,7 +196,7 @@
                                 prompt: 'Masukkan durasi sewa'
                             }
                         ]
-                    }, 
+                    },
                     noTelp: {
                         identifier: 'noTelp',
                         rules: [
@@ -189,7 +210,7 @@
                     on: 'submit',
                     inline: 'true'
                 });
-                
+
                 $('#penyewaForm').form({
                     namaPenyewa: {
                         identifier: 'namaPenyewa',
@@ -199,7 +220,7 @@
                                 prompt: 'Masukkan nama penyewa'
                             }
                         ]
-                    }, 
+                    },
                     noTelp: {
                         identifier: 'noTelp',
                         rules: [
