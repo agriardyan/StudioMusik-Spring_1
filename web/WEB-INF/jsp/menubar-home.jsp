@@ -38,12 +38,12 @@
         <div class="ui black small vertical right sidebar menu" id="loginSidebar">
             <div class="item">
                 <form class="ui form basic segment" method="POST" id="sideLogin" action="login">
-                    <c:if test="${!empty message}">
+                    <c:if test="${!empty messagePegawai}">
                         <div class="field">
                             <div class="ui error form segment">
                                 <div class="ui error message">
                                     <div class="header">Gagal Login</div>
-                                    <p>${message}</p>
+                                    <p>${messagePegawai}</p>
                                 </div>      
                             </div>
                         </div>
@@ -75,7 +75,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 
-            <c:if test="${!empty message}">
+            <c:if test="${!empty messagePegawai}">
                     $("#loginSidebar").sidebar('toggle');
             </c:if>
 

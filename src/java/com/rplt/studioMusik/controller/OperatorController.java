@@ -278,6 +278,7 @@ public class OperatorController {
         String noTelp = request.getParameter("telepon");
         String email = request.getParameter("email");
         int saldo = Integer.parseInt(request.getParameter("saldo"));
+        String tempatLahir = request.getParameter("tempatLahir");
 
         Member m = new Member();
         m.setmUsernameMember(username);
@@ -288,6 +289,7 @@ public class OperatorController {
         m.setmNomorTelepon(noTelp);
         m.setmEmailMember(email);
         m.setmSaldoMember(saldo);
+        m.setmTempatLahirMember(tempatLahir);
 
         member.simpanData(m);
 
@@ -296,7 +298,7 @@ public class OperatorController {
 
     @RequestMapping(value = "/cariUser", method = RequestMethod.POST)
     public String cariUser(ModelMap model) {
-        String username = request.getParameter("user");
+        String username = request.getParameter("user").toUpperCase();
         List<Member> memberList = null;
         try {
             memberList = member.getDataListbyUser(username);

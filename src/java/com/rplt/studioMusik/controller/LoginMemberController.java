@@ -45,9 +45,9 @@ public class LoginMemberController {
                         model.addAttribute("message", "Wrong password!");
                         return "redirect:home/member";
                     case 2:
-                        session.setAttribute("name", member.getNamaByUser(username));
+                        session.setAttribute("name", member.getNamaByUser(username).toUpperCase());
                         session.setAttribute("noTelp", member.getNoTelpByUser(username));
-                        session.setAttribute("username", username);
+                        session.setAttribute("username", username.toUpperCase());
                         return "redirect:/member/halamanutamamember";
                     default:
                         break;

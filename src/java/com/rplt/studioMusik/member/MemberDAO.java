@@ -31,20 +31,20 @@ public class MemberDAO implements IMemberDAO<Member> {
     public void simpanData(Member pT) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String kode = getGeneratedKodeMember();
-        String sql = "INSERT INTO member_studio_musik VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO member_studio_musik VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 new Object[]{
                     kode,
-                    pT.getmUsernameMember(),
+                    pT.getmUsernameMember().toUpperCase(),
                     pT.getmPaswordMember(),
-                    pT.getmNamaMember(),
-                    pT.getmTempatTanggalLahir(),
+                    pT.getmNamaMember().toUpperCase(),
+                    pT.getmTempatTanggalLahir().toUpperCase(),
                     pT.getmAlamatMember(),
                     pT.getmEmailMember(),
                     pT.getmNomorTelepon(),
                     pT.getmSaldoMember(),
-                    pT.getmTempatLahirMember()
+                    pT.getmTempatLahirMember().toUpperCase()
                 });
 
         pT.setmKodeMember(kode);

@@ -315,7 +315,7 @@ public class MemberController {
         List<Member> dataListbyUser = member.getDataListbyUser(session.getAttribute("username").toString());
         String ttl = dataListbyUser.get(0).getmTempatTanggalLahir();
         String tempatLahir = dataListbyUser.get(0).getmTempatLahirMember();
-        String alamat = dataListbyUser.get(0).getmTempatLahirMember();
+        String alamat = dataListbyUser.get(0).getmAlamatMember();
         String telepon = dataListbyUser.get(0).getmNomorTelepon();
         String email = dataListbyUser.get(0).getmEmailMember();
 
@@ -347,7 +347,7 @@ public class MemberController {
             model.addAttribute("alamat", alamat);
             model.addAttribute("noTelp", telepon);
             model.addAttribute("email", email);
-            model.addAttribute("error", "Password salah!");
+            model.addAttribute("error", "Password lama anda salah!");
             return "halaman-updateMember-member";
         }
 
@@ -377,7 +377,7 @@ public class MemberController {
         List<Member> dataListbyUser = member.getDataListbyUser(session.getAttribute("username").toString());
         String ttl = dataListbyUser.get(0).getmTempatTanggalLahir();
         String tempatLahir = dataListbyUser.get(0).getmTempatLahirMember();
-        String alamat = dataListbyUser.get(0).getmTempatLahirMember();
+        String alamat = dataListbyUser.get(0).getmAlamatMember();
         String telepon = dataListbyUser.get(0).getmNomorTelepon();
         String email = dataListbyUser.get(0).getmEmailMember();
 

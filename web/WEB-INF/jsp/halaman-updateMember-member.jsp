@@ -21,6 +21,16 @@
 
         <div class="ui one column page grid">
             <div class="column">
+                <c:if test="${!empty error}">
+                    <div class="field">
+                        <div class="ui error form segment">
+                            <div class="ui error message">
+                                <div class="header">Gagal Update</div>
+                                <p>${error}</p>
+                            </div>      
+                        </div>
+                    </div>
+                </c:if>
                 <!--Search box-->
                 <!--End of Search box-->
                 <form class="ui fluid form segment" method="POST" id="updateForm" action="validateUpdate">
@@ -144,6 +154,14 @@
                                 prompt: 'Masukkan Alamat E-mail'
                             }
                         ]
+                    },
+                    oldPassword: {
+                        identifier: 'oldPassword',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Masukkan Password'
+                            }]
                     },
                     password: {
                         identifier: 'password',

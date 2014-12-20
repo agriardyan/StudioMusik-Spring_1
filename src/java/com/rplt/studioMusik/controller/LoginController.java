@@ -43,22 +43,22 @@ public class LoginController {
         switch (validateLogin) {
                     case 0:
                         //unregistered
-                        model.addAttribute("message", "Unregistered username!");
+                        model.addAttribute("messagePegawai", "Unregistered username!");
                         return "index";
                     case 1:
                         //wrong password
                         model.addAttribute("tempName", username);
-                        model.addAttribute("message", "Wrong password!");
+                        model.addAttribute("messagePegawai", "Wrong password!");
                         return "index";
                     case 2:
                         session.setAttribute("role", "OPERATOR");
-                        session.setAttribute("name", pegawai.getNamaByUser(username));
-                        session.setAttribute("username", username);
+                        session.setAttribute("name", pegawai.getNamaByUser(username.toUpperCase()));
+                        session.setAttribute("username", username.toUpperCase());
                         return "redirect:/operator/halamanutamaoperator";
                     case 3:
                         session.setAttribute("role", "OWNER");
-                        session.setAttribute("name", pegawai.getNamaByUser(username));
-                        session.setAttribute("username", username);
+                        session.setAttribute("name", pegawai.getNamaByUser(username.toUpperCase()));
+                        session.setAttribute("username", username.toUpperCase());
                         return "redirect:/owner/halamanutamaowner";
                     default:
                         break;
